@@ -14,6 +14,14 @@
 
 @implementation CardGameViewController
 
+- (IBAction)cardSelected:(UIButton *)sender {
+	sender.selected = !sender.selected;
+}
+
+//
+// Created by XCode template
+//
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
