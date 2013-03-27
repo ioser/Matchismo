@@ -7,15 +7,34 @@
 //
 
 #import "CardGameViewController.h"
+#import "PlayingCardDeck.h"
+#import "Card.h"
 
 @interface CardGameViewController ()
 
+@property (strong, nonatomic) PlayingCardDeck *playingCardDeck;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (nonatomic) int flipCount;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtonList;
 
 @end
 
 @implementation CardGameViewController
+
+- (void)setCardButtonList:(NSArray *)cardButtonList {
+	_cardButtonList = cardButtonList;
+	for (UIButton *cardButton in _cardButtonList) {
+		Card *card = [self.playingCardDeck drawRandomCard];
+		[cardButton setTitle:card.contents forState:UIControlStateSelected];
+	}
+}
+
+- (Deck *)playingCardDeck {
+	if (_playingCardDeck == nil) {
+		_playingCardDeck = [[PlayingCardDeck alloc] init];
+	}
+	return _playingCardDeck;
+}
 
 - (IBAction)flipCard:(UIButton *)sender {
 	sender.selected = !sender.selected;

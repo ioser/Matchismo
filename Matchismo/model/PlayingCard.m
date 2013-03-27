@@ -8,24 +8,45 @@
 
 #import "PlayingCard.h"
 
-NSArray *rankSymbols = nil;
-NSArray *suitSymbols = nil;
+NSArray *rankSymbolList = nil; // static member
+NSArray *suitSymbolList = nil; // static member
 
 @implementation PlayingCard
 
-- (NSString *)getRankSymbol {
-	if (rankSymbols == nil) {
-		rankSymbols = @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8",
-				  @"9", @"10", @"J", @"Q", @"K",];
+@synthesize suit = _suit;
+
++ (NSArray *)getRankSymbolList {
+	if (rankSymbolList == nil) {
+		rankSymbolList = @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8",
+					 @"9", @"10", @"J", @"Q", @"K",];
 	}
-	return rankSymbols[self.rank];
+	return rankSymbolList;
 }
 
-- (NSArray *)getValidSuitSymbols {
-	if (suitSymbols == nil) {
-		suitSymbols = @[@"♥", @"♦", @"♠", @"♣"];
++ (NSArray *)getSuitSymbolList {
+	if (suitSymbolList == nil) {
+		suitSymbolList = @[@"♥", @"♦", @"♠", @"♣"];
 	}
-	return suitSymbols;
+	return suitSymbolList;
+}
+
++ (NSUInteger)maxRank {
+	NSUInteger result = 0;
+	
+	NSArray *symbolList = [PlayingCard getRankSymbolList];
+	result = symbolList.count - 1;
+	
+	return result;
+}
+
+- (void)setRank:(NSUInteger)rank {
+	if (rank <= [PlayingCard maxRank]) { // using [self.class maxRank] to invoke method would be better OOP
+		_rank = rank;
+	}
+}
+
+- (NSString *)getRankSymbol {
+	return [PlayingCard getRankSymbolList][self.rank];
 }
 
 // Override "contents" getter from Card class
@@ -42,6 +63,12 @@ NSArray *suitSymbols = nil;
 	}
 	
 	return result;
+}
+
+- (void)setSuit:(NSString *)suit {
+	if ([[PlayingCard getSuitSymbolList] containsObject:suit]) {
+		_suit = suit;
+	}
 }
 
 @end
