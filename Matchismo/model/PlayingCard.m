@@ -71,4 +71,21 @@ NSArray *suitSymbolList = nil; // static member
 	}
 }
 
+- (int)match:(NSArray *)otherCards {
+	int result = 0;
+	
+	for (PlayingCard *card in otherCards) {
+		if ([card.contents isEqualToString:self.contents]) {
+			result = 8;
+		} else if (card.rank == self.rank) {
+			result = 4;
+		} else if ([card.suit isEqualToString:self.suit]) {
+			result = 1;
+		}
+		
+	}
+	
+	return result;
+}
+
 @end

@@ -15,7 +15,7 @@
 	self = [super init];
 	if (self != nil) {
 		for (NSString *suit in [PlayingCard getSuitSymbolList]) {
-			for (int i = 1; i <= [PlayingCard maxRank]; i++) {
+			for (int i = 0; i <= [PlayingCard maxRank]; i++) {
 				PlayingCard *card = [[PlayingCard alloc] init];
 				card.rank = i;
 				card.suit = suit;
