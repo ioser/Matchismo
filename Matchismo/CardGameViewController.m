@@ -13,9 +13,10 @@
 
 @interface CardGameViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
 @property (strong, nonatomic) PlayingCardDeck *playingCardDeck;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
-@property (nonatomic) int flipCount;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtonList;
 @property (strong, nonatomic) CardMatchingGame *game;
 
@@ -32,6 +33,9 @@
 		cardButton.enabled = !card.isUnplayable;
 		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3;
 	}
+	self.consoleLabel.text = self.game.consoleMessage;
+	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+	self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
 }
 
 - (CardMatchingGame *)game {
@@ -44,11 +48,6 @@
 
 - (void)setCardButtonList:(NSArray *)cardButtonList {
 	_cardButtonList = cardButtonList;
-//	for (UIButton *cardButton in _cardButtonList) {
-//		Card *card = [self.playingCardDeck drawRandomCard];
-//		[cardButton setTitle:card.contents forState:UIControlStateSelected];
-//	}
-	
 }
 
 - (Deck *)playingCardDeck {
@@ -58,16 +57,18 @@
 	return _playingCardDeck;
 }
 
-- (IBAction)flipCard:(UIButton *)sender {
-	[self.game flipCardAtIndex:[self.cardButtonList indexOfObject:sender]];
-//	sender.selected = !sender.selected;
-	self.flipCount++;
+//
+// Restart the game with a new set of cards
+//
+- (IBAction)deal:(UIButton *)sender {
+	self.game = nil;
+	self.playingCardDeck = nil;
 	[self updateUI];
 }
 
-- (void)setFlipCount:(int)flipCount {
-	_flipCount++;
-	self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", _flipCount];
+- (IBAction)flipCard:(UIButton *)sender {
+	[self.game flipCardAtIndex:[self.cardButtonList indexOfObject:sender]];
+	[self updateUI];
 }
 
 //

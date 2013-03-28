@@ -73,11 +73,21 @@
 				card.unplayable = YES;
 				targetCard.unplayable = YES;
 				result *= MATCH_BONUS;
+				self.consoleMessage = [NSString stringWithFormat:@"%@ and %@ matched! %d points awarded!",
+								  targetCard.contents, card.contents, result];
+				
 			} else {
+				card.faceUp = NO; // Flip the old card back over since it didn't match
 				result = MISMATCH_PENALTY;
+				self.consoleMessage = [NSString stringWithFormat:@"%@ and %@ did not match! %d points subtracted!",
+								  targetCard.contents, card.contents, result];
 			}
 			break;
 		}
+	}
+	
+	if (result == 0) {
+		self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face up.", targetCard.contents];
 	}
 	
 	return result;
@@ -90,6 +100,9 @@
 		if (card.isFaceUp == NO) {
 			int matchScore = [self getMatchScore:card];
 			self.score += matchScore - FLIP_COST;
+			self.flipCount++;
+		} else {
+			self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face down.", card.contents];
 		}
 		card.faceUp = !card.isFaceUp;
 	}

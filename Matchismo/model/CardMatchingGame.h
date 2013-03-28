@@ -12,6 +12,8 @@
 @interface CardMatchingGame : NSObject
 
 @property (nonatomic, readonly) int score;
+@property (nonatomic, strong) NSString *consoleMessage;
+@property (nonatomic) int flipCount;
 
 /*
  * The designated (default) initializer
