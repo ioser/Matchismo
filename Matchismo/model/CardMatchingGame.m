@@ -62,9 +62,23 @@
 #define MISMATCH_PENALTY -2
 #define MATCH_BONUS 4
 
+- (NSArray *)getFaceUpCards {
+ 	NSMutableArray *result = [[NSMutableArray alloc] init];
+	
+	for (Card *card in self.cardList) {
+		if (card.isFaceUp) {
+			[result addObject:card];
+		}
+	}
+	
+	return result;
+}
+
 - (int)getMatchScore:(Card *)targetCard
 {
 	int result = 0;
+	
+	NSArray *faceUpCardList = [self getFaceUpCards];
 	
 	for (Card *card in self.cardList) {
 		if (card.isFaceUp && !card.isUnplayable) {
