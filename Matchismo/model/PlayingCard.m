@@ -39,6 +39,10 @@ NSArray *suitSymbolList = nil; // static member
 	return result;
 }
 
+- (NSString *)description {
+	return self.contents;
+}
+
 - (void)setRank:(NSUInteger)rank {
 	if (rank <= [PlayingCard maxRank]) { // using [self.class maxRank] to invoke method would be better OOP
 		_rank = rank;
@@ -76,13 +80,16 @@ NSArray *suitSymbolList = nil; // static member
 	
 	for (PlayingCard *card in otherCards) {
 		if ([card.contents isEqualToString:self.contents]) {
-			result = 8;
+			result += 8;
 		} else if (card.rank == self.rank) {
-			result = 4;
+			result += 4;
 		} else if ([card.suit isEqualToString:self.suit]) {
-			result = 1;
+			result += 1;
+		} else {
+			// We found a mismatched card, so we will reset the result to 0 and exit the loop.
+			result = 0;
+			break;
 		}
-		
 	}
 	
 	return result;

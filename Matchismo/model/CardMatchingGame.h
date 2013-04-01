@@ -11,6 +11,8 @@
 
 @interface CardMatchingGame : NSObject
 
+@property (nonatomic, weak)Card *matchTarget;
+@property (nonatomic) int cardsToMatchMode;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, strong) NSString *consoleMessage;
 @property (nonatomic) int flipCount;
@@ -18,6 +20,10 @@
 /*
  * The designated (default) initializer
  */
+- (id)initWithCardCount:(NSUInteger)cardCount
+			  usingDeck:(Deck *)deck
+		   cardsToMatch:(NSUInteger)cardsToMatch;
+
 - (id)initWithCardCount:(NSUInteger)cardCount
 			  usingDeck:(Deck *)deck;
 

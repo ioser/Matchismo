@@ -25,7 +25,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="flipCard:" destination="2" eventType="touchUpInside" id="xtv-kd-Skz"/>
+                                    <action selector="showCardFace:" destination="2" eventType="touchUpInside" id="Pef-eH-iBG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wi9-xy-jKA">
@@ -340,6 +340,7 @@
             <relationships>
                 <relationship kind="action" name="deal:" candidateClass="UIButton"/>
                 <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
+                <relationship kind="action" name="showCardFace:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="consoleLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="flipLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>

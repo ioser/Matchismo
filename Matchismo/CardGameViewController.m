@@ -41,7 +41,8 @@
 - (CardMatchingGame *)game {
 	if (_game == nil) {
 		_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtonList.count
-												  usingDeck:self.playingCardDeck];
+												  usingDeck:self.playingCardDeck
+											   cardsToMatch:1];
 	}
 	return _game;
 }
@@ -66,8 +67,29 @@
 	[self updateUI];
 }
 
+- (void)toggleFaceState:(UIButton *)button
+{
+	Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:button]];
+	card.faceUp = !card.isFaceUp;
+}
+
+- (IBAction)showCardFace:(UIButton *)button
+{
+	[self toggleFaceState:button];
+	[self updateUI];
+	Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:button]];
+	if (card.isFaceUp == NO) {
+		card.faceUp = YES;
+		[self updateUI];
+		sleep(1);
+		card.faceUp = NO;
+	}
+	[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(flipCard:) userInfo:button repeats:NO];
+}
+
 - (IBAction)flipCard:(UIButton *)sender {
-	[self.game flipCardAtIndex:[self.cardButtonList indexOfObject:sender]];
+	NSUInteger index = [self.cardButtonList indexOfObject:sender];
+	[self.game flipCardAtIndex:index];
 	[self updateUI];
 }
 
