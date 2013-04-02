@@ -11,6 +11,8 @@
 #import "Card.h"
 #import "CardMatchingGame.h"
 
+#define SHOW_CARD_FACE_DELAY 1
+
 @interface CardGameViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
@@ -24,6 +26,17 @@
 
 @implementation CardGameViewController
 
+- (Card *)cardForButton:(UIButton *)button {
+	Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:button]];
+	return card;
+}
+
+- (void)disableCardButtons {
+	for (UIButton *button in self.cardButtonList) {
+		button.enabled = NO;
+	}
+}
+
 - (void)updateUI {
 	for (UIButton *cardButton in self.cardButtonList) {
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
@@ -32,6 +45,11 @@
 		[cardButton setTitle:card.contents forState:UIControlStateSelected | UIControlStateDisabled];
 		cardButton.enabled = !card.isUnplayable;
 		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3;
+		if (card == self.game.matchTarget) {
+			cardButton.backgroundColor = [UIColor redColor];
+		} else {
+			cardButton.backgroundColor = [UIColor clearColor];
+		}
 	}
 	self.consoleLabel.text = self.game.consoleMessage;
 	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
@@ -42,7 +60,7 @@
 	if (_game == nil) {
 		_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtonList.count
 												  usingDeck:self.playingCardDeck
-											   cardsToMatch:1];
+											   cardsToMatch:2];
 	}
 	return _game;
 }
@@ -73,22 +91,28 @@
 	card.faceUp = !card.isFaceUp;
 }
 
+/*
+ * Shows the face of the final candidate match card for 1 second.  If the match target is not set yet then there will be no delay flipping over the card.
+ */
 - (IBAction)showCardFace:(UIButton *)button
 {
-	[self toggleFaceState:button];
-	[self updateUI];
+	float delay = 0;
 	Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:button]];
-	if (card.isFaceUp == NO) {
+	if (card.isFaceUp == NO && self.game.matchTarget != nil &&
+			self.game.numberOfCardsFaceUp == self.game.cardsToMatchMode) {
 		card.faceUp = YES;
 		[self updateUI];
-		sleep(1);
 		card.faceUp = NO;
+		delay = SHOW_CARD_FACE_DELAY;
+		[self disableCardButtons];
 	}
-	[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(flipCard:) userInfo:button repeats:NO];
+	[NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(flipCard:) userInfo:button repeats:NO];
+
 }
 
-- (IBAction)flipCard:(UIButton *)sender {
-	NSUInteger index = [self.cardButtonList indexOfObject:sender];
+- (void)flipCard:(NSTimer *)timer {
+	UIButton *button = (UIButton *)timer.userInfo;
+	NSUInteger index = [self.cardButtonList indexOfObject:button];
 	[self.game flipCardAtIndex:index];
 	[self updateUI];
 }

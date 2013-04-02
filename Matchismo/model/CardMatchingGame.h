@@ -31,4 +31,6 @@
 
 - (Card *)cardAtIndex:(NSUInteger)index;
 
+- (NSUInteger)numberOfCardsFaceUp;
+
 @end

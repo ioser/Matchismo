@@ -93,6 +93,16 @@
 	return result;
 }
 
+- (NSUInteger)numberOfCardsFaceUp {
+	NSUInteger result = 0;
+	for (Card *card in self.cardList) {
+		if (card.isFaceUp && !card.isUnplayable) {
+			result++;
+		}
+	}
+	return result;
+}
+
 - (int)getMatchScore:(Card *)card
 {
 	int result = 0;
@@ -120,8 +130,8 @@
 	}
 	
 	if (result == 0) {
-		// Since there were no (or not enough) cards faceup, we only turned the target card face up.
-		self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face up.", targetCard.contents];
+		// Since there were no (or not enough) cards faceup, we only turned the card face up.
+		self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];
 	}
 	
 	return result;
@@ -133,6 +143,7 @@
 	if (card.isUnplayable == NO) {
 		if (card.isFaceUp == NO) {
 			card.faceUp = YES;
+			self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];			
 			if (self.matchTarget != nil) {
 				int matchScore = [self getMatchScore:card];
 				self.score += matchScore - FLIP_COST;
