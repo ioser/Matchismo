@@ -23,6 +23,8 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtonList;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (nonatomic) NSUInteger numberOfCardsToMatch;
+@property (strong, nonatomic)UIImage *cardBackImage;
+@property (nonatomic)BOOL disableInput;
 
 @end
 
@@ -43,10 +45,24 @@
 	for (UIButton *cardButton in self.cardButtonList) {
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		cardButton.selected = card.isFaceUp;
+		[cardButton setSelected:card.isFaceUp];
+		
+		//
+		// Only set the card back image if the card is *not* selected.
+		//
+		UIImage *cardBackImage = self.cardBackImage;
+		if (cardButton.selected == YES) {
+			cardBackImage = nil;
+		}
+		[cardButton setImage:cardBackImage forState:UIControlStateNormal];
 		[cardButton setTitle:card.contents forState:UIControlStateSelected];
 		[cardButton setTitle:card.contents forState:UIControlStateSelected | UIControlStateDisabled];
+		
+		NSLog(@"Card at index %d is %@", [self.cardButtonList indexOfObject:cardButton], card);
+		
 		cardButton.enabled = !card.isUnplayable;
 		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3;
+				
 		if (card == self.game.matchTarget) {
 			cardButton.backgroundColor = [UIColor redColor];
 		} else {
@@ -67,8 +83,15 @@
 	return _game;
 }
 
+/*
+ * Gets called by the bootstrap/startup framework as the storyboard gets loaded.
+ */
 - (void)setCardButtonList:(NSArray *)cardButtonList {
 	_cardButtonList = cardButtonList;
+	self.cardBackImage = [UIImage imageNamed:@"cardback.png"];
+	for (UIButton *button in _cardButtonList) {
+		[button setImage:self.cardBackImage	forState:UIControlStateNormal];
+	}
 }
 
 - (Deck *)playingCardDeck {
@@ -110,6 +133,10 @@
  */
 - (IBAction)showCardFace:(UIButton *)button
 {
+	if (self.disableInput == YES) {
+		return;
+	}
+	
 	float delay = 0;
 	Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:button]];
 	if (card.isFaceUp == NO && self.game.matchTarget != nil &&
@@ -117,14 +144,15 @@
 		card.faceUp = YES;
 		[self updateUI];
 		card.faceUp = NO;
+		self.disableInput = YES;
 		delay = SHOW_CARD_FACE_DELAY;
-		[self disableCardButtons];
 	}
 	[NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(flipCard:) userInfo:button repeats:NO];
 
 }
 
 - (void)flipCard:(NSTimer *)timer {
+	self.disableInput = NO;
 	UIButton *button = (UIButton *)timer.userInfo;
 	NSUInteger index = [self.cardButtonList indexOfObject:button];
 	[self.game flipCardAtIndex:index];
@@ -141,6 +169,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
 	[self.segmentedControl addTarget:self action:@selector(pickNumberOfCardsToMatch:forEvent:) forControlEvents:UIControlEventValueChanged];
 	self.numberOfCardsToMatch = 1;
+	[self restartGame];
 }
 
 - (void)didReceiveMemoryWarning

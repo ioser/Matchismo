@@ -23,6 +23,7 @@
 		9A5AEBB116FA6F330023614D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A5AEBB016FA6F330023614D /* Default-568h@2x.png */; };
 		9A5AEBB416FA6F330023614D /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A5AEBB216FA6F330023614D /* MainStoryboard.storyboard */; };
 		9A5AEBB716FA6F330023614D /* CardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A5AEBB616FA6F330023614D /* CardGameViewController.m */; };
+		9A5F7659170ABAA3002095D7 /* cardback.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A5F7658170ABAA3002095D7 /* cardback.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		9A5AEBB316FA6F330023614D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		9A5AEBB516FA6F330023614D /* CardGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardGameViewController.h; sourceTree = "<group>"; };
 		9A5AEBB616FA6F330023614D /* CardGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardGameViewController.m; sourceTree = "<group>"; };
+		9A5F7658170ABAA3002095D7 /* cardback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardback.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		9A5AEBA116FA6F330023614D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9A5F7658170ABAA3002095D7 /* cardback.png */,
 				9A5AEBA916FA6F330023614D /* CardGameAppDelegate.h */,
 				9A5AEBAA16FA6F330023614D /* CardGameAppDelegate.m */,
 				9A5AEBA216FA6F330023614D /* Matchismo-Info.plist */,
@@ -197,6 +200,7 @@
 				9A5AEBAF16FA6F330023614D /* Default@2x.png in Resources */,
 				9A5AEBB116FA6F330023614D /* Default-568h@2x.png in Resources */,
 				9A5AEBB416FA6F330023614D /* MainStoryboard.storyboard in Resources */,
+				9A5F7659170ABAA3002095D7 /* cardback.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
