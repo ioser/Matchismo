@@ -15,12 +15,14 @@
 
 @interface CardGameViewController ()
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
 @property (strong, nonatomic) PlayingCardDeck *playingCardDeck;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtonList;
 @property (strong, nonatomic) CardMatchingGame *game;
+@property (nonatomic) NSUInteger numberOfCardsToMatch;
 
 @end
 
@@ -60,7 +62,7 @@
 	if (_game == nil) {
 		_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtonList.count
 												  usingDeck:self.playingCardDeck
-											   cardsToMatch:2];
+											   cardsToMatch:self.numberOfCardsToMatch];
 	}
 	return _game;
 }
@@ -76,13 +78,25 @@
 	return _playingCardDeck;
 }
 
+- (void)pickNumberOfCardsToMatch:(UISegmentedControl *)sender forEvent:(UIEvent *)event {
+	NSInteger index = [sender selectedSegmentIndex];
+	NSLog(@"Segment %d selected.", index);
+	self.numberOfCardsToMatch = index + 1;
+	[self restartGame];
+}
+
 //
 // Restart the game with a new set of cards
 //
-- (IBAction)deal:(UIButton *)sender {
+- (void)restartGame {
 	self.game = nil;
 	self.playingCardDeck = nil;
-	[self updateUI];
+	[self updateUI];	
+}
+
+
+- (IBAction)deal:(UIButton *)sender {
+	[self restartGame];
 }
 
 - (void)toggleFaceState:(UIButton *)button
@@ -125,6 +139,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+	[self.segmentedControl addTarget:self action:@selector(pickNumberOfCardsToMatch:forEvent:) forControlEvents:UIControlEventValueChanged];
+	self.numberOfCardsToMatch = 1;
 }
 
 - (void)didReceiveMemoryWarning
