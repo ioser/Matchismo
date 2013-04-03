@@ -12,6 +12,7 @@
 #import "CardMatchingGame.h"
 
 #define SHOW_CARD_FACE_DELAY 1
+#define IMAGE_INSET 5
 
 @interface CardGameViewController ()
 
@@ -25,6 +26,7 @@
 @property (nonatomic) NSUInteger numberOfCardsToMatch;
 @property (strong, nonatomic)UIImage *cardBackImage;
 @property (nonatomic)BOOL disableInput;
+@property (nonatomic)BOOL gameInPlay;
 
 @end
 
@@ -89,8 +91,10 @@
 - (void)setCardButtonList:(NSArray *)cardButtonList {
 	_cardButtonList = cardButtonList;
 	self.cardBackImage = [UIImage imageNamed:@"cardback.png"];
+	UIEdgeInsets insets = UIEdgeInsetsMake(IMAGE_INSET, IMAGE_INSET, IMAGE_INSET, IMAGE_INSET);
 	for (UIButton *button in _cardButtonList) {
 		[button setImage:self.cardBackImage	forState:UIControlStateNormal];
+		[button setImageEdgeInsets:insets];
 	}
 }
 
@@ -114,7 +118,8 @@
 - (void)restartGame {
 	self.game = nil;
 	self.playingCardDeck = nil;
-	[self updateUI];	
+	self.segmentedControl.enabled = YES;
+	[self updateUI];
 }
 
 
@@ -133,6 +138,11 @@
  */
 - (IBAction)showCardFace:(UIButton *)button
 {
+	if (self.gameInPlay == NO) {
+		self.gameInPlay = YES;
+		self.segmentedControl.enabled = NO;
+	}
+	
 	if (self.disableInput == YES) {
 		return;
 	}
