@@ -15,4 +15,7 @@
 @property (readonly, nonatomic)NSTimeInterval duration;
 @property (nonatomic)int score;
 
++ (NSArray *)allGameResults;
+
 @end
+

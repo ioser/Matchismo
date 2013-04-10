@@ -22,6 +22,40 @@
 #define END_KEY @"END_KEY"
 #define SCORE_KEY @"SCORE_KEY"
 
++ (NSArray *)allGameResults {
+	NSMutableArray *result = [[NSMutableArray alloc] init];
+	NSDictionary *gameResultsList = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALL_RESULTS_KEY];
+	for (id propertyList in [gameResultsList allValues]) {
+		GameResult *gameResult = [[GameResult alloc] initWithPropertyList:propertyList];
+		if (gameResult != nil) {
+			[result addObject:gameResult];
+		}
+	}
+	
+	return result;
+}
+
+- (NSString *)description {
+	return [NSString stringWithFormat:@"Score: %d Start: %@ Time: %f",
+			self.score, self.start, self.duration];
+}
+
+- (id)initWithPropertyList:(id)propertyList {
+	self = [self init];
+	if (self != nil) {
+		if ([propertyList isKindOfClass:[NSDictionary class]]) {
+			NSDictionary *resultsDict = (NSDictionary *)propertyList;
+			_start = resultsDict[START_KEY];
+			_end = resultsDict[END_KEY];
+			_score = [resultsDict[SCORE_KEY] intValue];
+			if (_start == nil || _end == nil) {
+				self = nil;
+			}
+		}
+	}
+	return self;
+}
+
 - (id)asPropertyList {
 	return @{ START_KEY : self.start, END_KEY : self.end, SCORE_KEY : @(self.score)};
 }

@@ -120,7 +120,6 @@
 - (void)restartGame {
 	if (self.gameResult != nil) {
 		self.gameResult.score = self.game.score;
-		// write this game result out to NSUserDefaults for our app?
 	}
 	self.gameResult = [[GameResult alloc] init];
 	self.game = nil;

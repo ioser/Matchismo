@@ -7,6 +7,7 @@
 //
 
 #import "GameResultsViewController.h"
+#import "GameResult.h"
 
 @interface GameResultsViewController ()
 
@@ -62,6 +63,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"GameResultsViewController's viewWillAppear method called.");
+	NSArray *gameResultsList = [GameResult allGameResults];
+	NSString *displayText = @"";
+	for (GameResult *gameResult in gameResultsList) {
+		displayText = [displayText stringByAppendingString:[gameResult description]];
+		displayText = [displayText stringByAppendingFormat:@"\n"];
+	}
+	self.display.text = displayText;
 }
 
 @end
