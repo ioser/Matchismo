@@ -10,6 +10,7 @@
 #import "PlayingCardDeck.h"
 #import "Card.h"
 #import "CardMatchingGame.h"
+#import "GameResult.h"
 
 #define SHOW_CARD_FACE_DELAY 1
 #define IMAGE_INSET 5
@@ -27,6 +28,7 @@
 @property (strong, nonatomic)UIImage *cardBackImage;
 @property (nonatomic)BOOL disableInput;
 @property (nonatomic)BOOL gameInPlay;
+@property (nonatomic, strong)GameResult *gameResult;
 
 @end
 
@@ -116,6 +118,11 @@
 // Restart the game with a new set of cards
 //
 - (void)restartGame {
+	if (self.gameResult != nil) {
+		self.gameResult.score = self.game.score;
+		// write this game result out to NSUserDefaults for our app?
+	}
+	self.gameResult = [[GameResult alloc] init];
 	self.game = nil;
 	self.playingCardDeck = nil;
 	self.segmentedControl.enabled = YES;
