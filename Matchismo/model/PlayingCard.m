@@ -78,17 +78,22 @@ NSArray *suitSymbolList = nil; // static member
 - (int)match:(NSArray *)otherCards {
 	int result = 0;
 	
-	for (PlayingCard *card in otherCards) {
-		if ([card.contents isEqualToString:self.contents]) {
-			result += 8;
-		} else if (card.rank == self.rank) {
-			result += 4;
-		} else if ([card.suit isEqualToString:self.suit]) {
-			result += 1;
+	for (Card *card in otherCards) {
+		if ([card isKindOfClass:[PlayingCard class]] == YES) {
+			PlayingCard *playingCard = (PlayingCard *)card;
+			if ([playingCard.contents isEqualToString:self.contents]) {
+				result += 8;
+			} else if (playingCard.rank == self.rank) {
+				result += 4;
+			} else if ([playingCard.suit isEqualToString:self.suit]) {
+				result += 1;
+			} else {
+				// We found a mismatched card, so we will reset the result to 0 and exit the loop.
+				result = 0;
+				break;
+			}
 		} else {
-			// We found a mismatched card, so we will reset the result to 0 and exit the loop.
-			result = 0;
-			break;
+			NSLog(@"WARNING: Found a non 'PlayingCard' card instance.");
 		}
 	}
 	

@@ -119,6 +119,7 @@
 	self.game = nil;
 	self.playingCardDeck = nil;
 	self.segmentedControl.enabled = YES;
+	self.gameInPlay = NO;
 	[self updateUI];
 }
 
