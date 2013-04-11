@@ -12,10 +12,20 @@
 @interface GameResultsViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *display;
+@property (nonatomic) SEL sortComparator;
 
 @end
 
 @implementation GameResultsViewController
+
+//@synthesize sortComparator = _sortComparator;
+
+- (SEL)sortComparator {
+	if (!_sortComparator) {
+		_sortComparator = @selector(compareByDate:);
+	}
+	return _sortComparator;
+}
 
 - (void)setup {
 	// init code that can't wait until the viewDidLoad method gets called
@@ -61,9 +71,8 @@
 	NSLog(@"GameResultsViewController's viewWillLayoutSubviews method called.");
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	NSLog(@"GameResultsViewController's viewWillAppear method called.");
-	NSArray *gameResultsList = [GameResult allGameResults];
+- (void)updateUI {
+	NSArray *gameResultsList = [GameResult allGameResultsSortedBySelector:self.sortComparator];
 	NSString *displayText = @"";
 	for (GameResult *gameResult in gameResultsList) {
 		displayText = [displayText stringByAppendingString:[gameResult description]];
@@ -71,5 +80,21 @@
 	}
 	self.display.text = displayText;
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+	NSLog(@"GameResultsViewController's viewWillAppear method called.");
+	[self updateUI];
+}
+
+- (IBAction)sortByScore {
+	self.sortComparator = @selector(compareByScore:);
+	[self updateUI];
+}
+
+- (IBAction)sortByDate {
+	self.sortComparator = @selector(compareByDate:);
+	[self updateUI];
+}
+
 
 @end

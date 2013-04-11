@@ -16,6 +16,6 @@
 @property (nonatomic)int score;
 
 + (NSArray *)allGameResults;
-
++ (NSArray *)allGameResultsSortedBySelector:(SEL)comparator;
 @end
 

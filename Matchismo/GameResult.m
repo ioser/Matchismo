@@ -23,15 +23,39 @@
 #define SCORE_KEY @"SCORE_KEY"
 
 + (NSArray *)allGameResults {
-	NSMutableArray *result = [[NSMutableArray alloc] init];
-	NSDictionary *gameResultsList = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALL_RESULTS_KEY];
-	for (id propertyList in [gameResultsList allValues]) {
+	return [self allGameResultsSortedBySelector:@selector(compareByDate:)]; // By default, order by date.
+}
+
++ (NSArray *)allGameResultsSortedBySelector:(SEL)comparator {
+	NSMutableArray *newResultList = [[NSMutableArray alloc] init];
+	NSDictionary *oldResultsList = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALL_RESULTS_KEY];
+	for (id propertyList in [oldResultsList allValues]) {
 		GameResult *gameResult = [[GameResult alloc] initWithPropertyList:propertyList];
 		if (gameResult != nil) {
-			[result addObject:gameResult];
+			[newResultList addObject:gameResult];
 		}
 	}
 	
+	return [newResultList sortedArrayUsingSelector:comparator];
+}
+
+- (NSComparisonResult)compareByScore:(GameResult *)otherGameResult {
+	NSInteger result = NSOrderedAscending;
+	if (self.score < otherGameResult.score) {
+		result = NSOrderedDescending;
+	}
+	return result;
+}
+
+- (NSComparisonResult)compareByDate:(GameResult *)otherGameResult {
+	return [self.start compare:otherGameResult.start];
+}
+
+- (NSComparisonResult)compareByDuration:(GameResult *)otherGameResult {
+	NSInteger result = NSOrderedAscending;
+	if (self.duration < otherGameResult.duration) {
+		result = NSOrderedDescending;
+	}
 	return result;
 }
 
