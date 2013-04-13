@@ -65,7 +65,7 @@
 		NSLog(@"Card at index %d is %@", [self.cardButtonList indexOfObject:cardButton], card);
 		
 		cardButton.enabled = !card.isUnplayable;
-		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3;
+		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3; // Dim the button if it is not enabled
 				
 		if (card == self.game.matchTarget) {
 			cardButton.backgroundColor = [UIColor redColor];
