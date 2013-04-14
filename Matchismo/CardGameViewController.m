@@ -19,12 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
-@property (strong, nonatomic) PlayingCardDeck *playingCardDeck;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtonList;
-@property (strong, nonatomic) CardMatchingGame *game;
-@property (nonatomic) NSUInteger numberOfCardsToMatch;
 @property (strong, nonatomic)UIImage *cardBackImage;
 @property (nonatomic)BOOL disableInput;
 @property (nonatomic)BOOL gameInPlay;
@@ -81,31 +77,13 @@
 - (CardMatchingGame *)game {
 	if (_game == nil) {
 		_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtonList.count
-												  usingDeck:self.playingCardDeck
+												  usingDeck:self.deck
 											   cardsToMatch:self.numberOfCardsToMatch];
 	}
 	return _game;
 }
 
-/*
- * Gets called by the bootstrap/startup framework as the storyboard gets loaded.
- */
-- (void)setCardButtonList:(NSArray *)cardButtonList {
-	_cardButtonList = cardButtonList;
-	self.cardBackImage = [UIImage imageNamed:@"cardback.png"];
-	UIEdgeInsets insets = UIEdgeInsetsMake(IMAGE_INSET, IMAGE_INSET, IMAGE_INSET, IMAGE_INSET);
-	for (UIButton *button in _cardButtonList) {
-		[button setImage:self.cardBackImage	forState:UIControlStateNormal];
-		[button setImageEdgeInsets:insets];
-	}
-}
 
-- (Deck *)playingCardDeck {
-	if (_playingCardDeck == nil) {
-		_playingCardDeck = [[PlayingCardDeck alloc] init];
-	}
-	return _playingCardDeck;
-}
 
 - (void)pickNumberOfCardsToMatch:(UISegmentedControl *)sender forEvent:(UIEvent *)event {
 	NSInteger index = [sender selectedSegmentIndex];
@@ -123,7 +101,7 @@
 	}
 	self.gameResult = [[GameResult alloc] init];
 	self.game = nil;
-	self.playingCardDeck = nil;
+	self.deck = nil;
 	self.segmentedControl.enabled = YES;
 	self.gameInPlay = NO;
 	[self updateUI];
@@ -187,6 +165,11 @@
 	[self.segmentedControl addTarget:self action:@selector(pickNumberOfCardsToMatch:forEvent:) forControlEvents:UIControlEventValueChanged];
 	self.numberOfCardsToMatch = 1;
 	[self restartGame];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	NSLog(@"CardGameViewController's viewWillAppear method called.");
 }
 
 - (void)didReceiveMemoryWarning
