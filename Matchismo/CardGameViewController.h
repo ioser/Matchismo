@@ -10,15 +10,21 @@
 #import "CardMatchingGame.h"
 #import "Deck.h"
 
+#define IMAGE_INSET 5
+
 @interface CardGameViewController : UIViewController
 {
 	CardMatchingGame *_game;
 	Deck *_deck;
+	NSArray *_cardButtonList;
+	UIImage *cardBackImage;
 }
 
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtonList;
 @property (strong, nonatomic) Deck *deck;
 @property (nonatomic) NSUInteger numberOfCardsToMatch;
+@property (strong, nonatomic)UIImage *cardBackImage;
+
 
 @end

@@ -13,7 +13,6 @@
 #import "GameResult.h"
 
 #define SHOW_CARD_FACE_DELAY 1
-#define IMAGE_INSET 5
 
 @interface CardGameViewController ()
 
@@ -21,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
-@property (strong, nonatomic)UIImage *cardBackImage;
 @property (nonatomic)BOOL disableInput;
 @property (nonatomic)BOOL gameInPlay;
 @property (nonatomic, strong)GameResult *gameResult;
