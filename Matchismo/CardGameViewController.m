@@ -16,13 +16,14 @@
 
 @interface CardGameViewController ()
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (nonatomic)BOOL disableInput;
 @property (nonatomic)BOOL gameInPlay;
 @property (nonatomic, strong)GameResult *gameResult;
+
+- (void)restartGame;
 
 @end
 
@@ -72,24 +73,6 @@
 	self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
 }
 
-- (CardMatchingGame *)game {
-	if (_game == nil) {
-		_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtonList.count
-												  usingDeck:self.deck
-											   cardsToMatch:self.numberOfCardsToMatch];
-	}
-	return _game;
-}
-
-
-
-- (void)pickNumberOfCardsToMatch:(UISegmentedControl *)sender forEvent:(UIEvent *)event {
-	NSInteger index = [sender selectedSegmentIndex];
-	NSLog(@"Segment %d selected.", index);
-	self.numberOfCardsToMatch = index + 1;
-	[self restartGame];
-}
-
 //
 // Restart the game with a new set of cards
 //
@@ -100,7 +83,6 @@
 	self.gameResult = [[GameResult alloc] init];
 	self.game = nil;
 	self.deck = nil;
-	self.segmentedControl.enabled = YES;
 	self.gameInPlay = NO;
 	[self updateUI];
 }
@@ -123,7 +105,6 @@
 {
 	if (self.gameInPlay == NO) {
 		self.gameInPlay = YES;
-		self.segmentedControl.enabled = NO;
 	}
 	
 	if (self.disableInput == YES) {
@@ -152,6 +133,10 @@
 	[self updateUI];
 }
 
+- (void)setCardButtonList:(NSArray *)cardButtonList {
+	_cardButtonList = cardButtonList;
+}
+
 //
 // Created by XCode template
 //
@@ -160,7 +145,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	[self.segmentedControl addTarget:self action:@selector(pickNumberOfCardsToMatch:forEvent:) forControlEvents:UIControlEventValueChanged];
 	self.numberOfCardsToMatch = 1;
 	[self restartGame];
 }

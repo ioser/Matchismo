@@ -7,20 +7,40 @@
 //
 
 #import "PlayingCardGameViewController.h"
-#import "CardMatchingGame.h"
+#import "PlayingCardMatchingGame.h"
 #import "PlayingCardDeck.h"
 
 @interface PlayingCardGameViewController ()
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 @end
 
 @implementation PlayingCardGameViewController
 
+- (void)restartGame {
+	self.segmentedControl.enabled = YES;
+	[super restartGame];
+}
+
+- (IBAction)showCardFace:(UIButton *)button {
+	self.segmentedControl.enabled = NO;
+	[super showCardFace:button];
+}
+
+- (void)pickNumberOfCardsToMatch:(UISegmentedControl *)sender forEvent:(UIEvent *)event {
+	NSInteger index = [sender selectedSegmentIndex];
+	NSLog(@"Segment %d selected.", index);
+	self.numberOfCardsToMatch = index + 1;
+	[self restartGame];
+}
+
 - (CardMatchingGame *)game {
 	if (_game == nil) {
-		_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtonList.count
+		_game = [[PlayingCardMatchingGame alloc] initWithCardCount:self.cardButtonList.count
 												  usingDeck:self.deck
 											   cardsToMatch:self.numberOfCardsToMatch];
+		_game.flipCost = 1;
 	}
 	return _game;
 }
@@ -36,7 +56,7 @@
  * Gets called by the bootstrap/startup framework as the storyboard gets loaded.
  */
 - (void)setCardButtonList:(NSArray *)cardButtonList {
-	_cardButtonList = cardButtonList;
+	[super setCardButtonList:cardButtonList];
 	self.cardBackImage = [UIImage imageNamed:@"cardback.png"];
 	UIEdgeInsets insets = UIEdgeInsetsMake(IMAGE_INSET, IMAGE_INSET, IMAGE_INSET, IMAGE_INSET);
 	for (UIButton *button in _cardButtonList) {
@@ -48,6 +68,7 @@
 //
 // Provided by XCode IDE
 //
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -59,6 +80,8 @@
 
 - (void)viewDidLoad
 {
+	[self.segmentedControl addTarget:self action:@selector(pickNumberOfCardsToMatch:forEvent:) forControlEvents:UIControlEventValueChanged];
+
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }

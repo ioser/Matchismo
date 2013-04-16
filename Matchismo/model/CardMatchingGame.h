@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Deck.h"
+#import "CardMatchingGameProtocol.h"
 
-@interface CardMatchingGame : NSObject
+@interface CardMatchingGame : NSObject <CardMatchingGameProtocol>
 
 @property (nonatomic, weak)Card *matchTarget;
 @property (nonatomic) int cardsToMatchMode;
@@ -26,8 +27,6 @@
 
 - (id)initWithCardCount:(NSUInteger)cardCount
 			  usingDeck:(Deck *)deck;
-
-- (void)flipCardAtIndex:(NSUInteger)index;
 
 - (Card *)cardAtIndex:(NSUInteger)index;
 

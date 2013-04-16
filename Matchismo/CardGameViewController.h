@@ -7,17 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardGameViewControllerProtocol.h"
 #import "CardMatchingGame.h"
 #import "Deck.h"
 
 #define IMAGE_INSET 5
 
-@interface CardGameViewController : UIViewController
+@interface CardGameViewController : UIViewController <CardGameViewControllerProtocol>
 {
 	CardMatchingGame *_game;
 	Deck *_deck;
 	NSArray *_cardButtonList;
-	UIImage *cardBackImage;
+	UIImage *_cardBackImage;
 }
 
 @property (strong, nonatomic) CardMatchingGame *game;

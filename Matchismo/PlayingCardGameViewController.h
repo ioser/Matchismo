@@ -7,7 +7,8 @@
 //
 
 #import "CardGameViewController.h"
+#import "CardGameViewControllerProtocol.h"
 
-@interface PlayingCardGameViewController : CardGameViewController
+@interface PlayingCardGameViewController : CardGameViewController <CardGameViewControllerProtocol>
 
 @end
