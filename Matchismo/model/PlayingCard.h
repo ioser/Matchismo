@@ -7,12 +7,9 @@
 //
 
 #import "Card.h"
+#import "SuitAndRankCard.h"
 
-@interface PlayingCard : Card
+@interface PlayingCard : SuitAndRankCard
 
-@property (strong, nonatomic)NSString *suit;
-@property (nonatomic)NSUInteger rank;
 
-+ (NSUInteger)maxRank;
-+ (NSArray *)getSuitSymbolList;
 @end

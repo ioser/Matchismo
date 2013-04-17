@@ -16,4 +16,5 @@
 @property (nonatomic, getter = isMatchTarget)BOOL isMatchTarget;
 
 - (int)match:(NSArray *)otherCards;
+
 @end

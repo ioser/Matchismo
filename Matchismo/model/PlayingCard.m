@@ -8,14 +8,10 @@
 
 #import "PlayingCard.h"
 
-NSArray *rankSymbolList = nil; // static member
-NSArray *suitSymbolList = nil; // static member
-
 @implementation PlayingCard
 
-@synthesize suit = _suit;
-
-+ (NSArray *)getRankSymbolList {
+// @Override
+- (NSArray *)getRankSymbolList {
 	if (rankSymbolList == nil) {
 		rankSymbolList = @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8",
 					 @"9", @"10", @"J", @"Q", @"K",];
@@ -23,17 +19,18 @@ NSArray *suitSymbolList = nil; // static member
 	return rankSymbolList;
 }
 
-+ (NSArray *)getSuitSymbolList {
+// @Override
+- (NSArray *)getSuitSymbolList {
 	if (suitSymbolList == nil) {
 		suitSymbolList = @[@"♥", @"♦", @"♠", @"♣"];
 	}
 	return suitSymbolList;
 }
 
-+ (NSUInteger)maxRank {
+- (NSUInteger)maxRank {
 	NSUInteger result = 0;
 	
-	NSArray *symbolList = [PlayingCard getRankSymbolList];
+	NSArray *symbolList = [self getRankSymbolList];
 	result = symbolList.count - 1;
 	
 	return result;
@@ -43,36 +40,10 @@ NSArray *suitSymbolList = nil; // static member
 	return self.contents;
 }
 
-- (void)setRank:(NSUInteger)rank {
-	if (rank <= [PlayingCard maxRank]) { // using [self.class maxRank] to invoke method would be better OOP
-		_rank = rank;
-	}
-}
-
-- (NSString *)getRankSymbol {
-	return [PlayingCard getRankSymbolList][self.rank];
-}
-
 // Override "contents" getter from Card class
 - (NSString *)contents {
 	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];
 	return result;
-}
-
-- (NSString *)suit {
-	NSString *result = _suit;
-	
-	if (result == nil) {
-		result = @"?";
-	}
-	
-	return result;
-}
-
-- (void)setSuit:(NSString *)suit {
-	if ([[PlayingCard getSuitSymbolList] containsObject:suit]) {
-		_suit = suit;
-	}
 }
 
 - (int)match:(NSArray *)otherCards {
