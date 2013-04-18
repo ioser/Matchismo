@@ -8,6 +8,9 @@
 
 #import "SuitAndRankCard.h"
 
+NSArray *rankSymbolList;
+NSArray *suitSymbolList;
+
 /*
  * An abstract class
  */
@@ -15,22 +18,22 @@
 
 @synthesize suit = _suit;
 
-// @Abstract
-- (NSArray *)getRankSymbolList {
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
++ (NSArray *)getRankSymbolList {
+	return rankSymbolList;
 }
 
-// @Abstract
-- (NSArray *)getSuitSymbolList {
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
++ (NSArray *)getSuitSymbolList {
+	return suitSymbolList;
 }
 
-// @Abstract
-- (NSUInteger)maxRank {
-	[self doesNotRecognizeSelector:_cmd];
-	return 0;
+
++ (NSUInteger)maxRank {
+	NSUInteger result = 0;
+	
+	NSArray *symbolList = [self getRankSymbolList];
+	result = symbolList.count - 1;
+	
+	return result;
 }
 
 - (NSString *)suit {

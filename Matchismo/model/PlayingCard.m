@@ -11,7 +11,7 @@
 @implementation PlayingCard
 
 // @Override
-- (NSArray *)getRankSymbolList {
++ (NSArray *)getRankSymbolList {
 	if (rankSymbolList == nil) {
 		rankSymbolList = @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8",
 					 @"9", @"10", @"J", @"Q", @"K",];
@@ -20,20 +20,11 @@
 }
 
 // @Override
-- (NSArray *)getSuitSymbolList {
++ (NSArray *)getSuitSymbolList {
 	if (suitSymbolList == nil) {
 		suitSymbolList = @[@"♥", @"♦", @"♠", @"♣"];
 	}
 	return suitSymbolList;
-}
-
-- (NSUInteger)maxRank {
-	NSUInteger result = 0;
-	
-	NSArray *symbolList = [self getRankSymbolList];
-	result = symbolList.count - 1;
-	
-	return result;
 }
 
 - (NSString *)description {

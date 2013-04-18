@@ -96,13 +96,15 @@
 			isa = PBXGroup;
 			children = (
 				9A007E2216FF68BB00F1A350 /* Card.h */,
-				9A007E2616FF699D00F1A350 /* Deck.h */,
-				9A007E2716FF699D00F1A350 /* Deck.m */,
 				9A007E2316FF68BB00F1A350 /* Card.m */,
+				9A53F139171DDE6300D2F481 /* SuitAndRankCard.h */,
+				9A53F13A171DDE6300D2F481 /* SuitAndRankCard.m */,
 				9A007E29170018DF00F1A350 /* PlayingCard.h */,
 				9A007E2A170018DF00F1A350 /* PlayingCard.m */,
 				9A1FF257171DDA8C00E7E5F3 /* SetCard.h */,
 				9A1FF258171DDA8C00E7E5F3 /* SetCard.m */,
+				9A007E2616FF699D00F1A350 /* Deck.h */,
+				9A007E2716FF699D00F1A350 /* Deck.m */,
 				9A007E2C1700B00000F1A350 /* PlayingCardDeck.h */,
 				9A007E2D1700B00100F1A350 /* PlayingCardDeck.m */,
 				9A3200E9171D094E007B6673 /* CardMatchingGameProtocol.h */,
@@ -110,8 +112,6 @@
 				9A007E301703726A00F1A350 /* CardMatchingGame.m */,
 				9A3200E6171D0785007B6673 /* PlayingCardMatchingGame.h */,
 				9A3200E7171D0785007B6673 /* PlayingCardMatchingGame.m */,
-				9A53F139171DDE6300D2F481 /* SuitAndRankCard.h */,
-				9A53F13A171DDE6300D2F481 /* SuitAndRankCard.m */,
 			);
 			name = model;
 			sourceTree = "<group>";

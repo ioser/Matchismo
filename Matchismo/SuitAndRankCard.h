@@ -8,19 +8,17 @@
 
 #import "Card.h"
 
+extern NSArray *rankSymbolList;
+extern NSArray *suitSymbolList;
 
 @interface SuitAndRankCard : Card
-{
-	NSArray *rankSymbolList;
-	NSArray *suitSymbolList;
-}
 
 @property (strong, nonatomic)NSString *suit;
 @property (nonatomic)NSUInteger rank;
 
-- (NSUInteger)maxRank;
-- (NSArray *)getRankSymbolList;
-- (NSArray *)getSuitSymbolList;
++ (NSUInteger)maxRank;
++ (NSArray *)getRankSymbolList;
++ (NSArray *)getSuitSymbolList;
 - (NSString *)getRankSymbol;
 
 @end
