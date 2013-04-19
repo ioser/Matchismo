@@ -8,6 +8,9 @@
 
 #import "SetCard.h"
 
+NSArray *colorArray;
+NSArray *fillTypeArray;
+
 @implementation SetCard
 
 + (NSArray *)getColorArray {
