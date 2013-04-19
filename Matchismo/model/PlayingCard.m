@@ -27,10 +27,6 @@
 	return suitSymbolList;
 }
 
-- (NSString *)description {
-	return self.contents;
-}
-
 // Override "contents" getter from Card class
 - (NSString *)contents {
 	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];

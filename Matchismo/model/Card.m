@@ -10,6 +10,10 @@
 
 @implementation Card
 
+- (NSString *)description {
+	return self.contents;
+}
+
 - (int)match:(NSArray *)otherCards {
 	int result = 0;
 	

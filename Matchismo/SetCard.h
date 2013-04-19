@@ -6,9 +6,21 @@
 //  Copyright (c) 2013 Richard Millet. All rights reserved.
 //
 
-#import "Card.h"
+#import "SuitAndRankCard.h"
 
-@interface SetCard : Card
+#define FILL_TYPE_NONE = 0;
+#define FILL_TYPE_SHADED = 1;
+#define FILE_TYPE_SOLID = 2;
 
+extern NSArray *colorArray;
+extern NSArray *fillTypeArray;
+
+@interface SetCard : SuitAndRankCard
+
+@property (strong, nonatomic) UIColor *color;
+@property (nonatomic) int fillType;
+
++ (NSArray *)getColorArray;
++ (NSArray *)getFillTypeArray;
 
 @end
