@@ -8,13 +8,13 @@
 
 #import "SuitAndRankCard.h"
 
-NSArray *rankSymbolList;
-NSArray *suitSymbolList;
-
 /*
  * An abstract class
  */
 @implementation SuitAndRankCard
+
+NSArray *rankSymbolList;
+NSArray *suitSymbolList;
 
 @synthesize suit = _suit;
 

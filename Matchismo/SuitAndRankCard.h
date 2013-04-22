@@ -8,10 +8,10 @@
 
 #import "Card.h"
 
+@interface SuitAndRankCard : Card
+
 extern NSArray *rankSymbolList;
 extern NSArray *suitSymbolList;
-
-@interface SuitAndRankCard : Card
 
 @property (strong, nonatomic)NSString *suit;
 @property (nonatomic)NSUInteger rank;
