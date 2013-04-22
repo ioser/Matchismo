@@ -13,17 +13,22 @@
  */
 @implementation SuitAndRankCard
 
-NSArray *rankSymbolList;
-NSArray *suitSymbolList;
-
 @synthesize suit = _suit;
 
 + (NSArray *)getRankSymbolList {
-	return rankSymbolList;
+	NSException* myException = [NSException
+								exceptionWithName:@"AbstractMethodException"
+								reason:@"Abstract method invoked."
+								userInfo:nil];
+	@throw myException;
 }
 
 + (NSArray *)getSuitSymbolList {
-	return suitSymbolList;
+	NSException* myException = [NSException
+								exceptionWithName:@"AbstractMethodException"
+								reason:@"Abstract method invoked."
+								userInfo:nil];
+	@throw myException;
 }
 
 

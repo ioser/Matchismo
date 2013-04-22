@@ -8,39 +8,28 @@
 
 #import "SetCard.h"
 
-NSArray *colorArray;
-NSArray *fillTypeArray;
+@interface SetCard ()
+
+@end
 
 @implementation SetCard
 
 + (NSArray *)getColorArray {
-	if (colorArray == nil) {
-		colorArray = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor]];
-	}
-	return colorArray;
+	return @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor]];
 }
 
 + (NSArray *)getFillTypeArray {
-	if (fillTypeArray == nil) {
-		fillTypeArray = @[@0, @1, @2];
-	}
-	return fillTypeArray;
+	return @[@0, @1, @2];
 }
 
 // @Override
 + (NSArray *)getRankSymbolList {
-	if (rankSymbolList == nil) {
-		rankSymbolList = @[@"1", @"2", @"3"];
-	}
-	return rankSymbolList;
+	return @[@"1", @"2", @"3"];
 }
 
 // @Override
 + (NSArray *)getSuitSymbolList {
-	if (suitSymbolList == nil) {
-		suitSymbolList = @[@"☐", @"△", @"◯"];
-	}
-	return suitSymbolList;
+	return @[@"☐", @"△", @"◯"];
 }
 
 // @Override

@@ -10,9 +10,6 @@
 
 @interface SuitAndRankCard : Card
 
-extern NSArray *rankSymbolList;
-extern NSArray *suitSymbolList;
-
 @property (strong, nonatomic)NSString *suit;
 @property (nonatomic)NSUInteger rank;
 

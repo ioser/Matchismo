@@ -12,11 +12,10 @@
 #define FILL_TYPE_SHADED = 1;
 #define FILE_TYPE_SOLID = 2;
 
-extern NSArray *colorArray;
-extern NSArray *fillTypeArray;
-
 @interface SetCard : SuitAndRankCard
 
+@property (strong, nonatomic)NSArray *colorArray;
+@property (strong, nonatomic)NSArray *fillTypeArray;
 @property (strong, nonatomic) UIColor *color;
 @property (nonatomic) int fillType;
 

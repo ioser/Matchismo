@@ -12,19 +12,13 @@
 
 // @Override
 + (NSArray *)getRankSymbolList {
-	if (rankSymbolList == nil) {
-		rankSymbolList = @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8",
+	return @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8",
 					 @"9", @"10", @"J", @"Q", @"K",];
-	}
-	return rankSymbolList;
 }
 
 // @Override
 + (NSArray *)getSuitSymbolList {
-	if (suitSymbolList == nil) {
-		suitSymbolList = @[@"♥", @"♦", @"♠", @"♣"];
-	}
-	return suitSymbolList;
+	return @[@"♥", @"♦", @"♠", @"♣"];
 }
 
 // Override "contents" getter from Card class
