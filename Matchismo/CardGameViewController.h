@@ -27,5 +27,12 @@
 @property (nonatomic) NSUInteger numberOfCardsToMatch;
 @property (strong, nonatomic)UIImage *cardBackImage;
 
+//
+// Should be protected properties
+//
+@property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *flipLabel;
+
 
 @end
