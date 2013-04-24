@@ -41,6 +41,13 @@
 	return result;
 }
 
+
+// Override "contents" getter from Card class
+- (NSString *)contents {
+	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];
+	return result;
+}
+
 - (NSString *)suit {
 	NSString *result = _suit;
 	

@@ -7,6 +7,7 @@
 //
 
 #import "SetGameViewController.h"
+#import "SetMatchingGame.h"
 #import "SetDeck.h"
 
 @interface SetGameViewController ()
@@ -14,6 +15,37 @@
 @end
 
 @implementation SetGameViewController
+
+- (void)restartGame {
+	[super restartGame];
+}
+
+- (IBAction)showCardFace:(UIButton *)button {
+	[super showCardFace:button];
+}
+
+- (CardMatchingGame *)game {
+	if (_game == nil) {
+		_game = [[SetMatchingGame alloc] initWithCardCount:self.cardButtonList.count
+														 usingDeck:self.deck
+													  cardsToMatch:self.numberOfCardsToMatch];
+		_game.flipCost = 1;
+	}
+	return _game;
+}
+
+/*
+ * Gets called by the bootstrap/startup framework as the storyboard gets loaded.
+ */
+- (void)setCardButtonList:(NSArray *)cardButtonList {
+	[super setCardButtonList:cardButtonList];
+	self.cardBackImage = [UIImage imageNamed:@"cardback.png"];
+	UIEdgeInsets insets = UIEdgeInsetsMake(IMAGE_INSET, IMAGE_INSET, IMAGE_INSET, IMAGE_INSET);
+	for (UIButton *button in _cardButtonList) {
+		[button setImage:self.cardBackImage	forState:UIControlStateNormal];
+		[button setImageEdgeInsets:insets];
+	}
+}
 
 - (Deck *)deck {
 	if (_deck == nil) {

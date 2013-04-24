@@ -21,11 +21,6 @@
 	return @[@"♥", @"♦", @"♠", @"♣"];
 }
 
-// Override "contents" getter from Card class
-- (NSString *)contents {
-	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];
-	return result;
-}
 
 - (int)match:(NSArray *)otherCards {
 	int result = 0;

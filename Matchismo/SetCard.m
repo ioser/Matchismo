@@ -32,6 +32,20 @@
 	return @[@"☐", @"△", @"◯"];
 }
 
+- (NSString *)getColorName:(UIColor *)color {
+	NSString *result = nil;
+	
+	if (color == [UIColor redColor]) {
+		result = @"red";
+	} else if (color == [UIColor greenColor]) {
+		result = @"green";
+	} else if (color == [UIColor blueColor]) {
+		result = @"blue";
+	}
+	
+	return result;
+}
+
 // @Override
 - (NSString *)getRankSymbol {
 	NSString *result = @"";
@@ -40,6 +54,12 @@
 		result = [result stringByAppendingString: self.suit];
 	}
 	
+	return result;
+}
+
+- (NSString *)contents {
+	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];
+	result = [NSString stringWithFormat:@"%@-%@-%d", result, [self getColorName:[self color]], self.fillType];
 	return result;
 }
 
