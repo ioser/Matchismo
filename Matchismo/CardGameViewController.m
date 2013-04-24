@@ -16,9 +16,6 @@
 
 @interface CardGameViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *consoleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (nonatomic)BOOL disableInput;
 @property (nonatomic)BOOL gameInPlay;
 @property (nonatomic, strong)GameResult *gameResult;
