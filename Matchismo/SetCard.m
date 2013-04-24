@@ -46,6 +46,20 @@
 	return result;
 }
 
+- (NSString *)getFillName:(int)fillType {
+	NSString *result = nil;
+	
+	if (fillType == FILL_TYPE_NONE) {
+		result = @"clear";
+	} else if (fillType == FILL_TYPE_SHADED) {
+		result = @"shaded";
+	} else if (fillType == FILL_TYPE_SOLID) {
+		result = @"solid";
+	}
+	
+	return result;
+}
+
 // @Override
 - (NSString *)getRankSymbol {
 	NSString *result = @"";
@@ -59,7 +73,7 @@
 
 - (NSString *)contents {
 	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];
-	result = [NSString stringWithFormat:@"%@-%@-%d", result, [self getColorName:[self color]], self.fillType];
+	result = [NSString stringWithFormat:@"%@-%@-%@", result, [self getColorName:[self color]], [self getFillName:[self fillType]]];
 	return result;
 }
 

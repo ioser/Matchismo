@@ -8,9 +8,9 @@
 
 #import "SuitAndRankCard.h"
 
-#define FILL_TYPE_NONE = 0;
-#define FILL_TYPE_SHADED = 1;
-#define FILE_TYPE_SOLID = 2;
+#define FILL_TYPE_NONE 0
+#define FILL_TYPE_SHADED 1
+#define FILL_TYPE_SOLID 2
 
 @interface SetCard : SuitAndRankCard
 
