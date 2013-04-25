@@ -16,6 +16,48 @@
 
 @implementation SetGameViewController
 
+- (NSAttributedString *)getAttributedContents:(Card *)card
+								  usingButton:(UIButton *)cardButton {
+	//
+	// First, get the button's existing font so we can use it
+	//
+	NSAttributedString *attributedString = [cardButton attributedTitleForState:UIControlStateNormal];
+	NSDictionary *attributes = [attributedString attributesAtIndex:0 effectiveRange:NULL];
+	UIFont *existingFont = attributes[NSFontAttributeName];
+	//
+	// Create the attributed string with the button's font and add color and fill attributes
+	//
+	NSAttributedString *newAttributeString = [[NSAttributedString alloc] initWithString:card.contents attributes:attributes];
+		
+	return newAttributeString;
+}
+
+- (void)updateUI {
+	for (UIButton *cardButton in self.cardButtonList) {
+		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
+		cardButton.selected = card.isFaceUp;
+		[cardButton setSelected:card.isFaceUp];
+		
+//		[cardButton setAttributedTitle:card.attributedContents forState:UIControlStateNormal];
+//		[cardButton setAttributedTitle:card.attributedContents forState:UIControlStateSelected];
+//		[cardButton setAttributedTitle:card.attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
+		
+		NSLog(@"Updating UI button id %@ to [%@:%@] with card ID %d", cardButton.restorationIdentifier, [card.attributedContents string], card.contents, card.id);
+		
+		cardButton.enabled = !card.isUnplayable;
+		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3; // Dim the button if it is not enabled
+		
+		if (card == self.game.matchTarget) {
+			cardButton.backgroundColor = [UIColor lightGrayColor];
+		} else {
+			cardButton.backgroundColor = [UIColor clearColor];
+		}
+	}
+	self.consoleLabel.text = self.game.consoleMessage;
+	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+	self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
+}
+
 - (void)restartGame {
 	[super restartGame];
 }
@@ -37,13 +79,19 @@
 /*
  * Gets called by the bootstrap/startup framework as the storyboard gets loaded.
  */
-- (void)setCardButtonList:(NSArray *)cardButtonList {
-	[super setCardButtonList:cardButtonList];
-	self.cardBackImage = [UIImage imageNamed:@"cardback.png"];
-	UIEdgeInsets insets = UIEdgeInsetsMake(IMAGE_INSET, IMAGE_INSET, IMAGE_INSET, IMAGE_INSET);
-	for (UIButton *button in _cardButtonList) {
-		[button setImage:self.cardBackImage	forState:UIControlStateNormal];
-		[button setImageEdgeInsets:insets];
+- (void)initCardButtonList {	
+	for (UIButton *cardButton in self.cardButtonList) {
+		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
+		NSAttributedString *attributedContents = card.attributedContents;
+		if (attributedContents == nil) {
+			attributedContents = [self getAttributedContents:card usingButton:cardButton];
+			card.attributedContents = attributedContents;
+		}
+		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
+		[cardButton setAttributedTitle:attributedContents forState:UIControlStateNormal];
+		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
+		
+		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);
 	}
 }
 
@@ -70,7 +118,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-	[self.deck description];
 }
 
 - (void)didReceiveMemoryWarning

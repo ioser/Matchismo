@@ -10,7 +10,9 @@
 
 @interface Card : NSObject
 
-@property (strong, nonatomic)NSString *contents;
+@property (nonatomic) int id;
+@property (nonatomic, strong) NSAttributedString *attributedContents;
+@property (nonatomic, strong) NSString *contents;
 @property (nonatomic, getter = isFaceUp)BOOL faceUp;
 @property (nonatomic, getter = isUnplayable)BOOL unplayable;
 @property (nonatomic, getter = isMatchTarget)BOOL isMatchTarget;

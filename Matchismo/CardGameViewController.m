@@ -20,8 +20,6 @@
 @property (nonatomic)BOOL gameInPlay;
 @property (nonatomic, strong)GameResult *gameResult;
 
-- (void)restartGame;
-
 @end
 
 @implementation CardGameViewController
@@ -38,36 +36,11 @@
 }
 
 - (void)updateUI {
-	for (UIButton *cardButton in self.cardButtonList) {
-		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
-		cardButton.selected = card.isFaceUp;
-		[cardButton setSelected:card.isFaceUp];
-		
-		//
-		// Only set the card back image if the card is *not* selected.
-		//
-		UIImage *cardBackImage = self.cardBackImage;
-		if (cardButton.selected == YES) {
-			cardBackImage = nil;
-		}
-		[cardButton setImage:cardBackImage forState:UIControlStateNormal];
-		[cardButton setTitle:card.contents forState:UIControlStateSelected];
-		[cardButton setTitle:card.contents forState:UIControlStateSelected | UIControlStateDisabled];
-		
-		NSLog(@"Card at index %d is %@", [self.cardButtonList indexOfObject:cardButton], card);
-		
-		cardButton.enabled = !card.isUnplayable;
-		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3; // Dim the button if it is not enabled
-				
-		if (card == self.game.matchTarget) {
-			cardButton.backgroundColor = [UIColor redColor];
-		} else {
-			cardButton.backgroundColor = [UIColor clearColor];
-		}
-	}
-	self.consoleLabel.text = self.game.consoleMessage;
-	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-	self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
+	// Shoud override
+}
+
+- (void)initCardButtonList {
+	// Override is subclasses
 }
 
 //
@@ -81,6 +54,7 @@
 	self.game = nil;
 	self.deck = nil;
 	self.gameInPlay = NO;
+	[self initCardButtonList];
 	[self updateUI];
 }
 

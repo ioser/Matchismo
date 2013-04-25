@@ -48,6 +48,10 @@
 		}
 	}
 	
+	for (Card *card in self.cardList) {
+		NSLog(@"Cards in play: %@ at %d in list.", card, [self.cardList indexOfObject:card]);
+	}
+	
 	return self;
 }
 
