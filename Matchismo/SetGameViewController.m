@@ -9,6 +9,7 @@
 #import "SetGameViewController.h"
 #import "SetMatchingGame.h"
 #import "SetDeck.h"
+#import "SetCard.h"
 
 @interface SetGameViewController ()
 
@@ -16,19 +17,22 @@
 
 @implementation SetGameViewController
 
-- (NSAttributedString *)getAttributedContents:(Card *)card
+- (NSAttributedString *)getAttributedContents:(SetCard *)card
 								  usingButton:(UIButton *)cardButton {
 	//
 	// First, get the button's existing font so we can use it
 	//
 	NSAttributedString *attributedString = [cardButton attributedTitleForState:UIControlStateNormal];
-	NSDictionary *attributes = [attributedString attributesAtIndex:0 effectiveRange:NULL];
+	NSMutableDictionary *attributes = [[attributedString attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
 	UIFont *existingFont = attributes[NSFontAttributeName];
 	//
 	// Create the attributed string with the button's font and add color and fill attributes
 	//
-	NSAttributedString *newAttributeString = [[NSAttributedString alloc] initWithString:card.contents attributes:attributes];
+	if (card.fillType == FILL_TYPE_NONE) {
+		attributes[NSStrokeWidthAttributeName] = @(3);
+	} else if (card.fillType == FILL_TYPE_SHADED)
 		
+	NSAttributedString *newAttributeString = [[NSAttributedString alloc] initWithString:card.contents attributes:attributes];
 	return newAttributeString;
 }
 

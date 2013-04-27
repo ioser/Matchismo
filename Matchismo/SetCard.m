@@ -29,7 +29,7 @@
 
 // @Override
 + (NSArray *)getSuitSymbolList {
-	return @[@"☐", @"△", @"◯"];
+	return @[@"■", @"▲", @"●"];
 }
 
 - (NSString *)getColorName:(UIColor *)color {
@@ -71,9 +71,17 @@
 	return result;
 }
 
-- (NSString *)contents {
+- (NSString *)description {
 	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];
 	result = [NSString stringWithFormat:@"%@-%@-%@", result, [self getColorName:[self color]], [self getFillName:[self fillType]]];
+	return result;
+}
+
+- (NSString *)contents {
+	NSString *result = @"";
+	
+	result = [self getRankSymbol];
+	
 	return result;
 }
 
