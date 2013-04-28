@@ -10,8 +10,5 @@
 
 @implementation SetMatchingGame
 
-- (int)getMatchScore:(Card *)card {
-	return 0;
-}
 
 @end

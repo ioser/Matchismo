@@ -131,6 +131,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	self.numberOfCardsToMatch = 2;
 }
 
 - (void)didReceiveMemoryWarning

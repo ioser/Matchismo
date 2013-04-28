@@ -18,6 +18,10 @@
 @property (nonatomic, strong) NSString *consoleMessage;
 @property (nonatomic) int flipCount;
 
+#define FLIP_COST 1
+#define MISMATCH_PENALTY -2
+#define MATCH_BONUS 4
+
 /*
  * The designated (default) initializer
  */
