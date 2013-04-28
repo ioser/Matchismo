@@ -64,7 +64,7 @@
 - (NSString *)getRankSymbol {
 	NSString *result = @"";
 	
-	for (int i = 0; i < self.rank; i++) {
+	for (int i = 0; i <= self.rank; i++) {
 		result = [result stringByAppendingString: self.suit];
 	}
 	
@@ -72,7 +72,7 @@
 }
 
 - (NSString *)description {
-	NSString *result = [NSString stringWithFormat:@"%@%@", [self getRankSymbol], self.suit];
+	NSString *result = [NSString stringWithFormat:@"%@", [self getRankSymbol]];
 	result = [NSString stringWithFormat:@"%@-%@-%@", result, [self getColorName:[self color]], [self getFillName:[self fillType]]];
 	return result;
 }

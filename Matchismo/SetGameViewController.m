@@ -11,6 +11,8 @@
 #import "SetDeck.h"
 #import "SetCard.h"
 
+#define SHADE_LEVEL 0.25
+
 @interface SetGameViewController ()
 
 @end
@@ -20,17 +22,24 @@
 - (NSAttributedString *)getAttributedContents:(SetCard *)card
 								  usingButton:(UIButton *)cardButton {
 	//
-	// First, get the button's existing font so we can use it
+	// First, get the button's existing attributes so we can use them
 	//
 	NSAttributedString *attributedString = [cardButton attributedTitleForState:UIControlStateNormal];
 	NSMutableDictionary *attributes = [[attributedString attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
-	UIFont *existingFont = attributes[NSFontAttributeName];
 	//
 	// Create the attributed string with the button's font and add color and fill attributes
 	//
+	[attributes setObject:card.color forKey:NSForegroundColorAttributeName];
+
 	if (card.fillType == FILL_TYPE_NONE) {
-		attributes[NSStrokeWidthAttributeName] = @(3);
-	} else if (card.fillType == FILL_TYPE_SHADED)
+		[attributes setObject:@(3) forKey:NSStrokeWidthAttributeName];
+	} else if (card.fillType == FILL_TYPE_SHADED) {
+		[attributes setObject:[card.color colorWithAlphaComponent:SHADE_LEVEL] forKey:NSForegroundColorAttributeName];
+	} else if (card.fillType == FILL_TYPE_SOLID) {
+		// Do nothing since the color has already been set
+	} else {
+		NSLog(@"ERROR: Unknown fill type %d for card %@", card.fillType, card);
+	}
 		
 	NSAttributedString *newAttributeString = [[NSAttributedString alloc] initWithString:card.contents attributes:attributes];
 	return newAttributeString;
@@ -88,7 +97,7 @@
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		NSAttributedString *attributedContents = card.attributedContents;
 		if (attributedContents == nil) {
-			attributedContents = [self getAttributedContents:card usingButton:cardButton];
+			attributedContents = [self getAttributedContents:(SetCard *)card usingButton:cardButton];
 			card.attributedContents = attributedContents;
 		}
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];

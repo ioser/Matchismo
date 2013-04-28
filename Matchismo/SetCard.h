@@ -14,8 +14,8 @@
 
 @interface SetCard : SuitAndRankCard
 
-@property (strong, nonatomic)NSArray *colorArray;
-@property (strong, nonatomic)NSArray *fillTypeArray;
+@property (strong, nonatomic, readonly) NSArray *colorArray;
+@property (strong, nonatomic, readonly) NSArray *fillTypeArray;
 @property (strong, nonatomic) UIColor *color;
 @property (nonatomic) int fillType;
 
