@@ -19,6 +19,10 @@
 
 @implementation SetGameViewController
 
+- (NSUInteger)numberOfCardsToMatch {
+	return 3; // three cards must match in the game of Set
+}
+
 - (NSAttributedString *)getAttributedContents:(SetCard *)card
 								  usingButton:(UIButton *)cardButton {
 	//
