@@ -54,6 +54,7 @@
 	self.game = nil;
 	self.deck = nil;
 	self.gameInPlay = NO;
+//	self.numberOfCardsToMatch = numberOfCardsToMatch;
 	[self initCardButtonList];
 	[self updateUI];
 }
@@ -116,7 +117,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	self.numberOfCardsToMatch = 1;
 	[self restartGame];
 }
 

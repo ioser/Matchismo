@@ -24,7 +24,7 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtonList;
 @property (strong, nonatomic) Deck *deck;
-@property (nonatomic) NSUInteger numberOfCardsToMatch;
+@property (nonatomic, readonly) NSUInteger numberOfCardsToMatch;
 @property (strong, nonatomic)UIImage *cardBackImage;
 
 //

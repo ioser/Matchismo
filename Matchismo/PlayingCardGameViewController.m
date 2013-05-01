@@ -18,6 +18,14 @@
 
 @implementation PlayingCardGameViewController
 
+- (NSUInteger)numberOfCardsToMatch {
+	NSUInteger result = [self.segmentedControl selectedSegmentIndex] + 1;
+	if (result < 1) {
+		result = 1;
+	}
+	return result;
+}
+
 - (void)updateUI {
 	for (UIButton *cardButton in self.cardButtonList) {
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
@@ -64,7 +72,6 @@
 - (void)pickNumberOfCardsToMatch:(UISegmentedControl *)sender forEvent:(UIEvent *)event {
 	NSInteger index = [sender selectedSegmentIndex];
 	NSLog(@"Segment %d selected.", index);
-	self.numberOfCardsToMatch = index + 1;
 	[self restartGame];
 }
 

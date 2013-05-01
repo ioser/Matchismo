@@ -20,7 +20,7 @@
 @implementation SetGameViewController
 
 - (NSUInteger)numberOfCardsToMatch {
-	return 3; // three cards must match in the game of Set
+	return 2; // two other cards must match the match-target card in the game of Set
 }
 
 - (NSAttributedString *)getAttributedContents:(SetCard *)card
@@ -135,7 +135,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-	self.numberOfCardsToMatch = 2;
 }
 
 - (void)didReceiveMemoryWarning
