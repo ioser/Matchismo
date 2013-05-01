@@ -2,7 +2,7 @@
 //  main.m
 //  Matchismo
 //
-//  Created by Richard E Millet on 3/20/13.
+//  Created by Richard Millet on 3/20/13.
 //  Copyright (c) 2013 Richard Millet. All rights reserved.
 //
 
