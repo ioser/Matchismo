@@ -10,6 +10,15 @@
 
 @implementation Card
 
+- (NSAttributedString *)attributedContents {
+	if (_attributedContents == nil) {
+		NSLog(@"Card contents are %@", self.contents);
+		_attributedContents = [[NSAttributedString alloc] initWithString:self.contents];
+		NSLog(@"Card attributed contents are %@", _attributedContents);
+	}
+	return _attributedContents;
+}
+
 - (NSString *)description {
 	return self.contents;
 }

@@ -23,6 +23,30 @@
 	return 2; // two other cards must match the match-target card in the game of Set
 }
 
+- (NSAttributedString *)getAttributedContentsByAdding:(NSDictionary *)dict forCard:(SetCard *)card {
+	NSAttributedString *result = nil;
+	
+	NSMutableDictionary *attributes = [[card.attributedContents attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+	[attributes addEntriesFromDictionary:dict];
+	result = [[NSAttributedString alloc] initWithString:card.contents attributes:attributes];
+	
+	return result;
+}
+
+/*
+ * Returns the results of adding an attribute to the current attributed contents of a card.  Does not
+ * change the attributed contents of the card.
+ */
+- (NSAttributedString *)getAttributedContentsByAdding:(NSObject *)attribute forKey:(NSString *)key forCard:(SetCard *)card {
+	NSAttributedString *result = nil;
+	
+	NSMutableDictionary *attributes = [[card.attributedContents attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+	[attributes setObject:attribute forKey:key];
+	result = [[NSAttributedString alloc] initWithString:card.contents attributes:attributes];
+	
+	return result;
+}
+
 - (NSAttributedString *)getAttributedContents:(SetCard *)card
 								  usingButton:(UIButton *)cardButton {
 	//
@@ -53,16 +77,11 @@
 	for (UIButton *cardButton in self.cardButtonList) {
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		cardButton.selected = card.isFaceUp;
-		[cardButton setSelected:card.isFaceUp];
-		
-//		[cardButton setAttributedTitle:card.attributedContents forState:UIControlStateNormal];
-//		[cardButton setAttributedTitle:card.attributedContents forState:UIControlStateSelected];
-//		[cardButton setAttributedTitle:card.attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
 		
 		NSLog(@"Updating UI button id %@ to [%@:%@] with card ID %d", cardButton.restorationIdentifier, [card.attributedContents string], card.contents, card.id);
 		
 		cardButton.enabled = !card.isUnplayable;
-		cardButton.alpha = cardButton.enabled ? 1.0 : 0.3; // Dim the button if it is not enabled
+		cardButton.alpha = cardButton.enabled ? 1.0 : 0.2; // Dim the button if it is not enabled
 		
 		if (card == self.game.matchTarget) {
 			cardButton.backgroundColor = [UIColor lightGrayColor];
@@ -70,7 +89,7 @@
 			cardButton.backgroundColor = [UIColor clearColor];
 		}
 	}
-	self.consoleLabel.text = self.game.consoleMessage;
+	self.consoleLabel.attributedText = self.game.consoleMessage;
 	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 	self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
 }
@@ -98,14 +117,27 @@
  */
 - (void)initCardButtonList {	
 	for (UIButton *cardButton in self.cardButtonList) {
-		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
+		SetCard *card = (SetCard *)[self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		NSAttributedString *attributedContents = card.attributedContents;
 		if (attributedContents == nil) {
 			attributedContents = [self getAttributedContents:(SetCard *)card usingButton:cardButton];
 			card.attributedContents = attributedContents;
 		}
-		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateNormal];
+		
+		//
+		// If the button is selected, we want the string underlined
+		//
+		attributedContents = [self getAttributedContentsByAdding:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName forCard:card];
+		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
+		
+		//
+		// If the button is selected and disabled then we want the string striked-through
+		//
+		attributedContents = [self getAttributedContentsByAdding:@{NSForegroundColorAttributeName : [UIColor blackColor], NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle)}
+														 forCard:card];
+//		attributedContents = [self getAttributedContentsByAdding:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName forCard:card];
+		attributedContents = [[NSAttributedString alloc] initWithString:@""];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
 		
 		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);

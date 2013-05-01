@@ -301,11 +301,18 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Let's Play" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K1q-8g-i4n">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K1q-8g-i4n">
                                 <rect key="frame" x="30" y="389" width="260" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Let's Play">
+                                        <attributes>
+                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <font key="NSFont" size="17" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jgt-5s-FF3">
@@ -758,11 +765,18 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Let's Play" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9lD-Fl-7aQ">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9lD-Fl-7aQ">
                                 <rect key="frame" x="30" y="389" width="260" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Let's Play">
+                                        <attributes>
+                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <font key="NSFont" size="17" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IOZ-Hx-peT">
@@ -815,37 +829,6 @@
         <image name="29-heart.png" width="24" height="21"/>
         <image name="Default.png" width="320" height="480"/>
     </resources>
-    <classes>
-        <class className="CardGameViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showCardFace:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="consoleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="flipLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
-                <relationship kind="outletCollection" name="cardButtonList" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="GameResultsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameResultsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="display" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="PlayingCardGameViewController" superclassName="CardGameViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardGameViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showCardFace:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="SetGameViewController" superclassName="CardGameViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetGameViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showCardFace:" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

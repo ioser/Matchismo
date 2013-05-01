@@ -30,7 +30,7 @@
 	for (UIButton *cardButton in self.cardButtonList) {
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		cardButton.selected = card.isFaceUp;
-		[cardButton setSelected:card.isFaceUp];
+//		[cardButton setSelected:card.isFaceUp];
 		
 		//
 		// Only set the card back image if the card is *not* selected.
@@ -54,7 +54,7 @@
 			cardButton.backgroundColor = [UIColor clearColor];
 		}
 	}
-	self.consoleLabel.text = self.game.consoleMessage;
+	self.consoleLabel.attributedText = self.game.consoleMessage;
 	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 	self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
 }
