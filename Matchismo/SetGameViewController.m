@@ -49,6 +49,10 @@
 	return newAttributeString;
 }
 
+- (void)showCardSelected:(SetCard *)card {
+	
+}
+
 - (void)updateUI {
 	for (UIButton *cardButton in self.cardButtonList) {
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
@@ -104,8 +108,10 @@
 			attributedContents = [self getAttributedContents:(SetCard *)card usingButton:cardButton];
 			card.attributedContents = attributedContents;
 		}
-		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateNormal];
+		
+		
+		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
 		
 		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);

@@ -39,9 +39,9 @@
 		if (cardButton.selected == YES) {
 			cardBackImage = nil;
 		}
-		[cardButton setImage:cardBackImage forState:UIControlStateNormal];
-		[cardButton setTitle:card.contents forState:UIControlStateSelected];
-		[cardButton setTitle:card.contents forState:UIControlStateSelected | UIControlStateDisabled];
+		[cardButton setImage:cardBackImage forState:UIControlStateNormal]; // face down
+		[cardButton setTitle:card.contents forState:UIControlStateSelected]; // face up
+		[cardButton setTitle:card.contents forState:UIControlStateSelected | UIControlStateDisabled]; // face up but disabled
 		
 		NSLog(@"Card at index %d is %@", [self.cardButtonList indexOfObject:cardButton], card);
 		
