@@ -14,6 +14,8 @@
 
 @implementation SetCard
 
+@synthesize attributedContents = _attributedContents;
+
 + (NSArray *)getColorArray {
 	return @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor]];
 }
@@ -30,6 +32,14 @@
 // @Override
 + (NSArray *)getSuitSymbolList {
 	return @[@"■", @"▲", @"●"];
+}
+
+- (NSAttributedString *)attributedContents {
+	return _attributedContents;
+}
+
+- (void)setAttributedContents:(NSAttributedString *)attributedContents {
+	_attributedContents = attributedContents;
 }
 
 - (int)match:(NSArray *)otherCards {

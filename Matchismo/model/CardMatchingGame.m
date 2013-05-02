@@ -112,10 +112,10 @@
 		if (card.isFaceUp == NO) {
 			card.faceUp = YES;
 			NSString *message = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];
+			NSRange range = [message rangeOfString:card.contents];
 			NSMutableAttributedString *mat = [[NSMutableAttributedString alloc] initWithString:message];
-			[message rangeOfString:card.contents
-			[mat replaceCharactersInRange:<#(NSRange)#> withAttributedString:<#(NSAttributedString *)#>]
-			self.consoleMessage = [self appendAttributedString:[card attributedContents] toString:@" flipped face up."];
+			[mat replaceCharactersInRange:range withAttributedString:card.attributedContents];
+			self.consoleMessage = mat;
 			if (self.matchTarget != nil) {
 				int matchScore = [self getMatchScore:card];
 				self.score += matchScore - self.flipCost;
@@ -127,8 +127,11 @@
 			self.flipCount++;
 		} else {
 			card.faceUp = NO;
-//			self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face down.", card.attributedContents];
-			self.consoleMessage = [self appendAttributedString:card.attributedContents toString:@" flipped face down."];
+			NSString *message = [NSString stringWithFormat:@"%@ flipped face down.", card.contents];
+			NSRange range = [message rangeOfString:card.contents];
+			NSMutableAttributedString *mat = [[NSMutableAttributedString alloc] initWithString:message];
+			[mat replaceCharactersInRange:range withAttributedString:card.attributedContents];
+			self.consoleMessage = mat;
 			if (card.isMatchTarget == YES) {
 				card.isMatchTarget = NO;
 				self.matchTarget = nil;
@@ -169,7 +172,10 @@
 	if (result == 0) {
 		// Since there were no (or not enough) cards faceup, we only turned the card face up.
 		NSString *message = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];
-		self.consoleMessage = [[NSAttributedString alloc] initWithString:message];
+		NSRange range = [message rangeOfString:card.contents];
+		NSMutableAttributedString *mat = [[NSMutableAttributedString alloc] initWithString:message];
+		[mat replaceCharactersInRange:range withAttributedString:card.attributedContents];
+		self.consoleMessage = mat;
 	}
 	
 	return result;

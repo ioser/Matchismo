@@ -129,8 +129,16 @@
 		}
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateNormal];
 		
-		
+		//
+		// If the button is selected, we want the string underlined
+		//
+		attributedContents = [self getAttributedContentsByAdding:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName forCard:card];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
+		
+		//
+		// If the button is both selected and disabled then we want the string empty/invisable
+		//
+		attributedContents = [[NSAttributedString alloc] initWithString:@""];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
 		
 		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);
