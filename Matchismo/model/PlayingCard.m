@@ -21,7 +21,6 @@
 	return @[@"♥", @"♦", @"♠", @"♣"];
 }
 
-
 - (int)match:(NSArray *)otherCards {
 	int result = 0;
 	

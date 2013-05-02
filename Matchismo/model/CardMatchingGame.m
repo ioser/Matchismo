@@ -111,7 +111,11 @@
 	if (card.isUnplayable == NO) {
 		if (card.isFaceUp == NO) {
 			card.faceUp = YES;
-			self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];			
+			NSString *message = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];
+			NSMutableAttributedString *mat = [[NSMutableAttributedString alloc] initWithString:message];
+			[message rangeOfString:card.contents
+			[mat replaceCharactersInRange:<#(NSRange)#> withAttributedString:<#(NSAttributedString *)#>]
+			self.consoleMessage = [self appendAttributedString:[card attributedContents] toString:@" flipped face up."];
 			if (self.matchTarget != nil) {
 				int matchScore = [self getMatchScore:card];
 				self.score += matchScore - self.flipCost;
@@ -123,7 +127,8 @@
 			self.flipCount++;
 		} else {
 			card.faceUp = NO;
-			self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face down.", card.contents];
+//			self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face down.", card.attributedContents];
+			self.consoleMessage = [self appendAttributedString:card.attributedContents toString:@" flipped face down."];
 			if (card.isMatchTarget == YES) {
 				card.isMatchTarget = NO;
 				self.matchTarget = nil;
@@ -148,20 +153,23 @@
 			targetCard.unplayable = YES;
 			self.matchTarget = nil;
 			result *= MATCH_BONUS;
-			self.consoleMessage = [NSString stringWithFormat:@"%@ matched %@! %d points awarded!",
+			NSString *message = [NSString stringWithFormat:@"%@ matched %@! %d points awarded!",
 								   targetCard.contents, [faceUpCardList componentsJoinedByString:@","], result];
+			self.consoleMessage = [[NSAttributedString alloc] initWithString:message];
 			
 		} else {
 			[self turnCardsFaceDown:faceUpCardList];
 			result = MISMATCH_PENALTY;
-			self.consoleMessage = [NSString stringWithFormat:@"%@ did not match %@! %d points subtracted!",
+			NSString *message = [NSString stringWithFormat:@"%@ did not match %@! %d points subtracted!",
 								   targetCard.contents, [faceUpCardList componentsJoinedByString:@","], result];
+			self.consoleMessage = [[NSAttributedString alloc] initWithString:message];
 		}
 	}
 	
 	if (result == 0) {
 		// Since there were no (or not enough) cards faceup, we only turned the card face up.
-		self.consoleMessage = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];
+		NSString *message = [NSString stringWithFormat:@"%@ flipped face up.", card.contents];
+		self.consoleMessage = [[NSAttributedString alloc] initWithString:message];
 	}
 	
 	return result;

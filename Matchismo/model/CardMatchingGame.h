@@ -15,7 +15,7 @@
 @property (nonatomic, weak)Card *matchTarget;
 @property (nonatomic) int cardsToMatchMode;
 @property (nonatomic, readonly) int score;
-@property (nonatomic, strong) NSString *consoleMessage;
+@property (nonatomic, strong) NSAttributedString *consoleMessage;
 @property (nonatomic) int flipCount;
 
 #define FLIP_COST 1
