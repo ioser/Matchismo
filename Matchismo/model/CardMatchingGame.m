@@ -141,6 +141,27 @@
 	}
 }
 
+//
+// An array of NSAttributedStrings joined by a separator
+//
+- (NSAttributedString *)componentsJoinedByString:(NSString *)separator fromArray:(NSArray *)cardArray {
+	NSAttributedString *attributedSeparator = [[NSAttributedString alloc] initWithString:separator];
+	NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@""];
+	for (Card *card in cardArray) {
+		[result appendAttributedString: card.attributedContents];
+		[result appendAttributedString: attributedSeparator];
+	}
+	
+	if ([result length] > 0) {
+		//
+		// Remove the last/extra separator
+		NSRange range = [[result string] rangeOfString:separator options:NSBackwardsSearch];
+		[result deleteCharactersInRange: range];
+	}
+	
+	return result;
+}
+
 - (int)getMatchScore:(Card *)card
 {
 	int result = 0;
@@ -156,10 +177,13 @@
 			targetCard.unplayable = YES;
 			self.matchTarget = nil;
 			result *= MATCH_BONUS;
+			NSAttributedString *faceUpCardListAttributedStrings = [self componentsJoinedByString:@"," fromArray:faceUpCardList];
 			NSString *message = [NSString stringWithFormat:@"%@ matched %@! %d points awarded!",
-								   targetCard.contents, [faceUpCardList componentsJoinedByString:@","], result];
-			self.consoleMessage = [[NSAttributedString alloc] initWithString:message];
-			
+								   targetCard.contents, [faceUpCardListAttributedStrings string], result];
+			NSRange range = [message rangeOfString:[faceUpCardListAttributedStrings string]];
+			NSMutableAttributedString *mat = [[NSMutableAttributedString alloc] initWithString:message];
+			[mat replaceCharactersInRange:range withAttributedString:faceUpCardListAttributedStrings];
+			self.consoleMessage = mat;
 		} else {
 			[self turnCardsFaceDown:faceUpCardList];
 			result = MISMATCH_PENALTY;
