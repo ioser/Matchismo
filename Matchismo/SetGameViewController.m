@@ -82,7 +82,7 @@
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		cardButton.selected = card.isFaceUp;
 		
-		NSLog(@"Updating UI button id %@ to [%@:%@] with card ID %d", cardButton.restorationIdentifier, [card.attributedContents string], card.contents, card.id);
+		NSLog(@"Updating UI button id %@ to [%@:%@] with card ID %d", cardButton.restorationIdentifier, [card.attributedContents string], card, card.id);
 		
 		cardButton.enabled = !card.isUnplayable;
 		cardButton.alpha = cardButton.enabled ? 1.0 : 0.2; // Dim the button if it is not enabled
@@ -141,7 +141,7 @@
 		attributedContents = [[NSAttributedString alloc] initWithString:@""];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
 		
-		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);
+//		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);
 	}
 }
 

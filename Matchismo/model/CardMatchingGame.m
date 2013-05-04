@@ -180,9 +180,13 @@
 			NSAttributedString *faceUpCardListAttributedStrings = [self componentsJoinedByString:@"," fromArray:faceUpCardList];
 			NSString *message = [NSString stringWithFormat:@"%@ matched %@! %d points awarded!",
 								   targetCard.contents, [faceUpCardListAttributedStrings string], result];
+			// Add atrributes to matching card list
 			NSRange range = [message rangeOfString:[faceUpCardListAttributedStrings string]];
 			NSMutableAttributedString *mat = [[NSMutableAttributedString alloc] initWithString:message];
 			[mat replaceCharactersInRange:range withAttributedString:faceUpCardListAttributedStrings];
+			// Add attributes to matching card target
+			range = [message rangeOfString:targetCard.contents];
+			[mat replaceCharactersInRange:range withAttributedString:targetCard.attributedContents];
 			self.consoleMessage = mat;
 		} else {
 			[self turnCardsFaceDown:faceUpCardList];

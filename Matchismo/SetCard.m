@@ -42,26 +42,98 @@
 	_attributedContents = attributedContents;
 }
 
+/*
+ * Forms a set if all the cards either have the same color or they all have different colors
+ */
+- (BOOL)formsColorSetWithCardList:(NSArray *)cardList {
+	BOOL result = NO;
+	
+	SetCard *card1 = self;
+	SetCard *card2 = cardList[0];
+	SetCard *card3 = cardList[1];
+	
+	if (([card1.color isEqual:card2.color] && [card2.color isEqual:card3.color]) ||
+		(![card1.color isEqual:card2.color] && ![card2.color isEqual:card3.color] && ![card1.color isEqual:card3.color])) {
+		result = YES;
+	}
+	
+	return result;
+}
+
+- (BOOL)formsFillSetWithCardList:(NSArray *)cardList {
+	BOOL result = NO;
+	
+	SetCard *card1 = self;
+	SetCard *card2 = cardList[0];
+	SetCard *card3 = cardList[1];
+	
+	if ((card1.fillType == card2.fillType && card2.fillType == card3.fillType) ||
+		(card1.fillType != card2.fillType && card2.fillType != card3.fillType && card1.fillType != card3.fillType)) {
+		result = YES;
+	}
+	
+	return result;
+}
+
+- (BOOL)formsRankSetWithCardList:(NSArray *)cardList {
+	BOOL result = NO;
+	
+	SetCard *card1 = self;
+	SetCard *card2 = cardList[0];
+	SetCard *card3 = cardList[1];
+	
+	if ((card1.rank == card2.rank && card2.rank == card3.rank) ||
+		(card1.rank != card2.rank && card2.rank != card3.rank && card1.rank != card3.rank)) {
+		result = YES;
+	}
+	
+	return result;
+}
+
+- (BOOL)formsSuitSetWithCardList:(NSArray *)cardList {
+	BOOL result = NO;
+	
+	SetCard *card1 = self;
+	SetCard *card2 = cardList[0];
+	SetCard *card3 = cardList[1];
+	
+	if (([card1.suit isEqual:card2.suit] && [card2.suit isEqual:card3.suit]) ||
+		(![card1.suit isEqual:card2.suit] && ![card2.suit isEqual:card3.suit] && ![card1.suit isEqual:card3.suit])) {
+		result = YES;
+	}
+	
+	return result;
+}
+
+- (BOOL) isInAllSets:(NSArray *)cardList {
+	BOOL result = YES;
+	
+	if ([self formsColorSetWithCardList:cardList] == NO) {
+		result = NO;
+		NSLog(@"Color set test failed.");
+	} else if ([self formsFillSetWithCardList:cardList] == NO) {
+		result = NO;
+		NSLog(@"Fill set test failed.");
+	} else if ([self formsRankSetWithCardList:cardList] == NO) {
+		result = NO;
+		NSLog(@"Rank set test failed.");
+	} else if ([self formsSuitSetWithCardList:cardList] == NO) {
+		result = NO;
+		NSLog(@"Suit set test failed.");
+	}
+	
+	return result;
+}
+
 - (int)match:(NSArray *)otherCards {
 	int result = 0;
 	
-	for (Card *card in otherCards) {
-		if ([card isKindOfClass:[SetCard class]] == YES) {
-			SetCard *setCard = (SetCard *)card;
-			if ([setCard.contents isEqualToString:self.contents]) {
-				result += 8;
-			} else if (setCard.rank == self.rank) {
-				result += 4;
-			} else if ([setCard.suit isEqualToString:self.suit]) {
-				result += 1;
-			} else {
-				// We found a mismatched card, so we will reset the result to 0 and exit the loop.
-				result = 0;
-				break;
-			}
-		} else {
-			NSLog(@"WARNING: Found a non 'PlayingCard' card instance.");
+	if (otherCards.count == 2) {
+		if ([self isInAllSets:otherCards] == YES) {
+			result = 10;
 		}
+	} else {
+		[NSException raise:@"Not the correct number of objects for a Set." format:@"otherCards array size needs to be 2 but was %d.", otherCards.count];
 	}
 	
 	return result;
