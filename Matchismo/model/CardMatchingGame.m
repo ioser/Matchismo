@@ -28,6 +28,20 @@
 	return _cardList;
 }
 
+- (id)shuffleAndRedeal:(NSUInteger)cardCount
+			   usingDeck:(Deck *)deck;
+{
+	for (int i = 0; i < cardCount; i++) {
+		Card *card = [deck drawRandomCard];
+		if (card != nil)
+			self.cardList[i] = card;
+		else
+			return nil; // We failed to initialize properly
+	}
+	
+	return self;
+}
+
 /*
  * The designated (default) initializer
  */
@@ -39,13 +53,7 @@
 	
 	if (self != nil) {
 		self.cardsToMatchMode = cardsToMatch;
-		for (int i = 0; i < cardCount; i++) {
-			Card *card = [deck drawRandomCard];
-			if (card != nil)
-				self.cardList[i] = card;
-			else
-				return nil; // We failed to initialize properly
-		}
+		self = [self shuffleAndRedeal:cardCount usingDeck:deck];
 	}
 	
 	for (Card *card in self.cardList) {
@@ -205,6 +213,8 @@
 		[mat replaceCharactersInRange:range withAttributedString:card.attributedContents];
 		self.consoleMessage = mat;
 	}
+	
+	self.lastMatchScore = result;
 	
 	return result;
 }

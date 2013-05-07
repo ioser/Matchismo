@@ -11,4 +11,6 @@
 
 @interface SetGameViewController : CardGameViewController <CardGameViewControllerProtocol>
 
+@property (nonatomic, strong) NSArray *cardsFormingASet;
+
 @end

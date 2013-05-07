@@ -116,6 +116,28 @@
 	return _game;
 }
 
+- (NSArray *)findCardsFormingASet {
+	NSArray *result = nil;
+	
+	for (UIButton *cardButton in self.cardButtonList) {
+		SetCard *A = (SetCard *)[self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
+		for (UIButton *cardButton in self.cardButtonList) {
+			SetCard *B = (SetCard *)[self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
+			for (UIButton *cardButton in self.cardButtonList) {
+				SetCard *C = (SetCard *)[self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
+				if (A != B && A != C && B != C) {
+					if ([A match:@[B, C]] > 0) {
+						result = @[A, B, C];
+						return result;
+					}
+				}
+			}
+		}
+	}
+	
+	return result;
+}
+
 /*
  * Gets called by the bootstrap/startup framework as the storyboard gets loaded.
  */
@@ -143,6 +165,19 @@
 		
 //		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);
 	}
+	//
+	// Keep calling ourself until we're showing a group of buttons that contain at least one
+	// valid set for the user to find.
+	//
+	NSArray *cardsFormingASet = [self findCardsFormingASet];
+	if (cardsFormingASet == nil) {
+		self.game = nil;
+		[self initCardButtonList];
+	} else {
+		self.cardsFormingASet = cardsFormingASet;
+	}
+	
+	NSLog(@"Cards in set are %@, %@, %@", self.cardsFormingASet[0], self.cardsFormingASet[1], self.cardsFormingASet[2]);
 }
 
 - (Deck *)deck {

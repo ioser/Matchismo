@@ -17,6 +17,7 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, strong) NSAttributedString *consoleMessage;
 @property (nonatomic) int flipCount;
+@property (nonatomic) int lastMatchScore;
 
 #define FLIP_COST 1
 #define MISMATCH_PENALTY -2
