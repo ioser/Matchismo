@@ -28,9 +28,24 @@
 	return _cardList;
 }
 
-- (id)shuffleAndRedeal:(NSUInteger)cardCount
-			   usingDeck:(Deck *)deck;
-{
+- (int)cardCount {
+	return [self.cardList count];
+}
+
+- (id)shuffleAndRedeal:(NSUInteger)cardCount usingDeck:(Deck *)deck
+{	
+	// If we have dealt cards, put all the playable ones back into the deck
+	if ([self.cardList count] > 0) {
+		for (int i = 0; i < cardCount; i++) {
+			Card *card = self.cardList[i];
+			if (card.isUnplayable == NO) {
+				[deck addCard:card atTop:YES];
+			}
+		}
+		self.cardList = nil;
+	}
+	
+	// Redeal
 	for (int i = 0; i < cardCount; i++) {
 		Card *card = [deck drawRandomCard];
 		if (card != nil)

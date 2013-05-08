@@ -188,6 +188,16 @@
 }
 
 //
+// If we found a match, put the non-matching cards back into the deck, reshuffle, and deal a new set
+// of cards.
+//
+- (void)handleMatch {
+	if ([self.game lastMatchScore] > 0) {
+		[self.game shuffleAndRedeal:[self.game cardCount] usingDeck:self.deck];
+	}
+}
+
+//
 //
 //
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

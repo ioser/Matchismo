@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSAttributedString *consoleMessage;
 @property (nonatomic) int flipCount;
 @property (nonatomic) int lastMatchScore;
+@property (nonatomic) int cardCount;
 
 #define FLIP_COST 1
 #define MISMATCH_PENALTY -2
@@ -36,5 +37,7 @@
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 - (NSUInteger)numberOfCardsFaceUp;
+
+- (id)shuffleAndRedeal:(NSUInteger)cardCount usingDeck:(Deck *)deck;
 
 @end

@@ -97,11 +97,18 @@
 
 }
 
+- (void)handleMatch {
+	// Override in subclasses if necessary.
+}
+
 - (void)flipCard:(NSTimer *)timer {
 	self.disableInput = NO;
 	UIButton *button = (UIButton *)timer.userInfo;
 	NSUInteger index = [self.cardButtonList indexOfObject:button];
 	[self.game flipCardAtIndex:index];
+	if ([self.game lastMatchScore] > 0) {
+		[self handleMatch];
+	}
 	[self updateUI];
 }
 
