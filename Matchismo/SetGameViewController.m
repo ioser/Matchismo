@@ -13,6 +13,7 @@
 #include "REMLogger.h"
 
 #define SHADE_LEVEL 0.25
+#define SOLID_LEVEL 1.0
 
 @interface SetGameViewController ()
 
@@ -59,7 +60,14 @@
 	// Create the attributed string with the button's font and add color and fill attributes
 	//
 	[attributes setObject:card.color forKey:NSForegroundColorAttributeName];
-
+	//
+	// Reset the stroke width, and alpha level to the defaults
+	//
+	[attributes setObject:@(0) forKey:NSStrokeWidthAttributeName];
+	[attributes setObject:[card.color colorWithAlphaComponent:SOLID_LEVEL] forKey:NSForegroundColorAttributeName];
+	//
+	// Now set the attributes based on the card that the button's title will represent
+	//
 	if (card.fillType == FILL_TYPE_NONE) {
 		[attributes setObject:@(3) forKey:NSStrokeWidthAttributeName];
 	} else if (card.fillType == FILL_TYPE_SHADED) {
