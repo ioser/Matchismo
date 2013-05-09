@@ -92,7 +92,7 @@
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		cardButton.selected = card.isFaceUp;
 		
-		NSLog(@"Updating UI button id %@ to [%@:%@] with card ID %d", cardButton.restorationIdentifier, [card.attributedContents string], card, card.id);
+		DLog(@"Updating UI button id %@ to [%@:%@] with card ID %d", cardButton.restorationIdentifier, [card.attributedContents string], card, card.id);
 		
 		cardButton.enabled = !card.isUnplayable;
 		cardButton.alpha = cardButton.enabled ? 1.0 : 0.2; // Dim the button if it is not enabled
@@ -154,39 +154,50 @@
 - (void)initCardButtonList {	
 	for (UIButton *cardButton in self.cardButtonList) {
 		SetCard *card = (SetCard *)[self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
-		NSAttributedString *attributedContents = card.attributedContents;
-		if (attributedContents == nil) {
-			attributedContents = [self getAttributedContents:(SetCard *)card usingButton:cardButton];
-			card.attributedContents = attributedContents;
+		if (card != nil) {
+			NSAttributedString *attributedContents = card.attributedContents;
+			if (attributedContents == nil) {
+				attributedContents = [self getAttributedContents:(SetCard *)card usingButton:cardButton];
+				card.attributedContents = attributedContents;
+			}
+			[cardButton setAttributedTitle:attributedContents forState:UIControlStateNormal];
+			
+			//
+			// If the button is selected, we want the string underlined
+			//
+			attributedContents = [self getAttributedContentsByAdding:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName forCard:card];
+			[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
+			
+			//
+			// If the button is both selected and disabled then we want the string empty/invisable
+			//
+			attributedContents = [[NSAttributedString alloc] initWithString:@""];
+			[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
+			
+			NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card, card.id);
+		} else {
+			//
+			// We don't have a card for this button, so show it as blank.
+			//
+			NSAttributedString *attributedContents = [[NSAttributedString alloc] initWithString:@""];
+			[cardButton setAttributedTitle:attributedContents forState:UIControlStateNormal];
+			[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
+			[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
 		}
-		[cardButton setAttributedTitle:attributedContents forState:UIControlStateNormal];
-		
-		//
-		// If the button is selected, we want the string underlined
-		//
-		attributedContents = [self getAttributedContentsByAdding:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName forCard:card];
-		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected];
-		
-		//
-		// If the button is both selected and disabled then we want the string empty/invisable
-		//
-		attributedContents = [[NSAttributedString alloc] initWithString:@""];
-		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
-		
-		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card, card.id);
 	}
 	//
 	// Keep calling ourself until we're showing a group of buttons that contain at least one
 	// valid set for the user to find.
 	//
 	NSArray *cardsFormingASet = [self findCardsFormingASet];
-	if (cardsFormingASet == nil) {
+	if (cardsFormingASet == nil && [self.deck countOfCards] > 0) {
 		self.game = nil;
 		[self initCardButtonList];
 	} else {
 		self.cardsFormingASet = cardsFormingASet;
 	}
 	
+	NSLog(@"Cards left in deck %d.", [self.deck countOfCards]);
 	NSLog(@"Cards in set are %@, %@, %@", self.cardsFormingASet[0], self.cardsFormingASet[1], self.cardsFormingASet[2]);
 }
 

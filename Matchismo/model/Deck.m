@@ -43,4 +43,8 @@
 	return result;
 }
 
+- (NSUInteger)countOfCards {
+	return [self.cards count];
+}
+
 @end

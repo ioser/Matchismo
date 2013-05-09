@@ -48,10 +48,11 @@
 	// Redeal
 	for (int i = 0; i < cardCount; i++) {
 		Card *card = [deck drawRandomCard];
-		if (card != nil)
+		if (card != nil) {
 			self.cardList[i] = card;
-		else
+		} else {
 			return nil; // We failed to initialize properly
+		}
 	}
 	
 	return self;
