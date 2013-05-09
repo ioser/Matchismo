@@ -10,6 +10,7 @@
 #import "SetMatchingGame.h"
 #import "SetDeck.h"
 #import "SetCard.h"
+#include "REMLogger.h"
 
 #define SHADE_LEVEL 0.25
 
@@ -78,6 +79,7 @@
 }
 
 - (void)updateUI {
+	NSLog(@"Update UI called.");
 	for (UIButton *cardButton in self.cardButtonList) {
 		Card *card = [self.game cardAtIndex:[self.cardButtonList indexOfObject:cardButton]];
 		cardButton.selected = card.isFaceUp;
@@ -163,7 +165,7 @@
 		attributedContents = [[NSAttributedString alloc] initWithString:@""];
 		[cardButton setAttributedTitle:attributedContents forState:UIControlStateSelected | UIControlStateDisabled];
 		
-//		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card.contents, card.id);
+		NSLog(@"Setting button ID = %@ to [%@ : %@] with card ID %d", cardButton.restorationIdentifier, [attributedContents string], card, card.id);
 	}
 	//
 	// Keep calling ourself until we're showing a group of buttons that contain at least one
@@ -193,7 +195,9 @@
 //
 - (void)handleMatch {
 	if ([self.game lastMatchScore] > 0) {
+		self.game.lastMatchScore = 0;
 		[self.game shuffleAndRedeal:[self.game cardCount] usingDeck:self.deck];
+		[self initCardButtonList];
 	}
 }
 

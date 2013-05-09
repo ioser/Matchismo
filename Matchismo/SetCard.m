@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Richard Millet. All rights reserved.
 //
 
+#import "REMLogger.h"
 #import "SetCard.h"
 
 @interface SetCard ()
@@ -110,16 +111,16 @@
 	
 	if ([self formsColorSetWithCardList:cardList] == NO) {
 		result = NO;
-		NSLog(@"Color set test failed.");
+		DLog(@"Color set test failed.");
 	} else if ([self formsFillSetWithCardList:cardList] == NO) {
 		result = NO;
-		NSLog(@"Fill set test failed.");
+		DLog(@"Fill set test failed.");
 	} else if ([self formsRankSetWithCardList:cardList] == NO) {
 		result = NO;
-		NSLog(@"Rank set test failed.");
+		DLog(@"Rank set test failed.");
 	} else if ([self formsSuitSetWithCardList:cardList] == NO) {
 		result = NO;
-		NSLog(@"Suit set test failed.");
+		DLog(@"Suit set test failed.");
 	}
 	
 	return result;

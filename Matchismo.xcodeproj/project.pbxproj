@@ -39,6 +39,7 @@
 /* Begin PBXFileReference section */
 		7925F81D1720FEB100DE695A /* SetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetDeck.h; sourceTree = "<group>"; };
 		7925F81E1720FEB100DE695A /* SetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetDeck.m; sourceTree = "<group>"; };
+		7991D0AD173B09190027DB0F /* REMLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = REMLogger.h; sourceTree = "<group>"; };
 		79EB42FC17226C4D00CDF26E /* SetGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetGameViewController.h; sourceTree = "<group>"; };
 		79EB42FD17226C4D00CDF26E /* SetGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetGameViewController.m; sourceTree = "<group>"; };
 		9A007E2216FF68BB00F1A350 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = model/Card.h; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 				9A007E2516FF692000F1A350 /* model */,
 				9A21002A1715F43F00208AA7 /* GameResult.h */,
 				9A21002B1715F43F00208AA7 /* GameResult.m */,
+				7991D0AD173B09190027DB0F /* REMLogger.h */,
 			);
 			path = Matchismo;
 			sourceTree = "<group>";

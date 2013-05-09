@@ -16,4 +16,6 @@
 
 - (IBAction)showCardFace:(UIButton *)button;
 
+- (void)handleMatch;
+
 @end
